@@ -264,7 +264,7 @@ function startReview(){
 function showCard(){
   if(idx>=queue.length){card.classList.add('hidden');ratings.classList.add('hidden');voiceBar.classList.add('hidden');empty.classList.remove('hidden');empty.textContent='مرور تمام شد. آفرین!';updateStats();return}
   const c=queue[idx];empty.classList.add('hidden');card.classList.remove('hidden');ratings.classList.remove('hidden');voiceBar.classList.remove('hidden');
-  word.textContent=c.word;ipa.textContent=c.ipa?'/ '+c.ipa+' /':'';pronfa.textContent=c.pronunciationFa?'تلفظ: '+c.pronunciationFa:'';pos.textContent=[c.partOfSpeech,c.level,c.lesson].filter(Boolean).join(' · ');
+  word.textContent=c.word;ipa.textContent=c.ipa?(c.ipa.trim().startsWith('/')?c.ipa:'/ '+c.ipa+' /'):'';pronfa.textContent=c.pronunciationFa?'تلفظ فارسی: '+c.pronunciationFa:'';pos.textContent=[c.partOfSpeech,c.level,c.lesson].filter(Boolean).join(' · ');
   answer.innerHTML=c.senses.map((s,i)=>'<div class="sense"><div class="meaning">'+(i+1)+'. '+esc(s.meaning)+'</div>'+(s.example?'<div class="example">'+esc(s.example)+'</div>':'')+(s.translation?'<div class="translation">'+esc(s.translation)+'</div>':'')+'</div>').join('')+(c.notes?'<div class="muted">نکته: '+esc(c.notes)+'</div>':'');
   answer.classList.add('hidden');frontHint.classList.remove('hidden');revealed=false;
   if(settings.autoSpeak)setTimeout(()=>speakCurrent(settings.accent),180);
