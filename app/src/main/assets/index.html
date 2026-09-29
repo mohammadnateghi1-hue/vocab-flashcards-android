@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>فلش‌کارت انگلیسی من</title>
+<style>
+body{margin:0;background:#0b1020;color:#f3f4f6;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+.app{max-width:760px;margin:auto;padding:16px}.tabs,.actions,.ratings{display:flex;gap:8px;flex-wrap:wrap}
+button,input,textarea,select{font:inherit}.btn{border:0;border-radius:12px;padding:10px 14px}.primary{background:#60a5fa;color:#07111e}.secondary{background:#1f2937;color:#fff}.danger{background:#7f1d1d;color:#fff}
+.panel{background:#111827;border:1px solid #263247;border-radius:18px;padding:16px;margin-top:14px}
+input,textarea,select{width:100%;box-sizing:border-box;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:10px;padding:10px;margin:6px 0}
+.card{min-height:300px;padding:24px;border-radius:22px;background:#172033;border:1px solid #334155;display:flex;flex-direction:column;justify-content:center}
+.word{font-size:34px;font-weight:800;direction:ltr;text-align:left}.example{direction:ltr;text-align:left;margin-top:16px;font-size:18px}.answer{margin-top:24px;border-top:1px dashed #475569;padding-top:18px}.hidden{display:none}
+.item{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin:8px 0}.muted{color:#94a3b8;font-size:13px}
+</style>
+</head>
+<body><div class="app">
+<h2>فلش‌کارت انگلیسی من</h2>
+<div class="tabs">
+<button class="btn primary" onclick="showTab('review')">مرور</button>
+<button class="btn secondary" onclick="showTab('add')">افزودن</button>
+<button class="btn secondary" onclick="showTab('list')">کارت‌ها</button>
+<button class="btn secondary" onclick="showTab('backup')">پشتیبان</button>
+</div>
+
+<div id="review" class="panel">
+<div class="actions"><select id="mode"><option value="due">مرور هوشمند</option><option value="all">همه</option><option value="missed">سخت‌ها</option></select><button class="btn primary" onclick="startReview()">شروع مرور</button></div>
+<div id="empty" class="muted" style="padding:25px;text-align:center">برای شروع مرور دکمه بالا را بزن.</div>
+<div id="card" class="card hidden" onclick="reveal()">
+<div id="word" class="word"></div><div id="example" class="example"></div>
+<div id="answer" class="answer hidden"><div id="meaning" style="font-size:24px;font-weight:700"></div><div id="translation" style="margin-top:8px"></div></div>
+</div>
+<div id="ratings" class="ratings hidden" style="margin-top:12px">
+<button class="btn secondary" onclick="event.stopPropagation();rate('hard')">سخت بود</button>
+<button class="btn danger" onclick="event.stopPropagation();rate('missed')">بلد نبودم</button>
+<button class="btn primary" onclick="event.stopPropagation();rate('known')">بلدم</button>
+<button class="btn secondary" onclick="event.stopPropagation();speakCurrent()">🔊 تلفظ</button>
+</div></div>
+
+<div id="add" class="panel hidden">
+<input id="fWord" placeholder="کلمه انگلیسی">
+<input id="fMeaning" placeholder="معنی فارسی">
+<textarea id="fExample" placeholder="مثال انگلیسی"></textarea>
+<textarea id="fTranslation" placeholder="ترجمه مثال"></textarea>
+<input id="fLesson" placeholder="درس / دسته‌بندی" value="درس ۱۰">
+<select id="fLevel"><option>A1</option><option>A2</option><option>B1</option><option selected>B2</option><option>C1</option><option>C2</option></select>
+<button class="btn primary" onclick="addCard()">افزودن کارت</button>
+</div>
+
+<div id="list" class="panel hidden"><input id="search" placeholder="جستجو..." oninput="renderList()"><div id="items"></div></div>
+
+<div id="backup" class="panel hidden">
+<button class="btn secondary" onclick="exportJson()">خروجی JSON</button>
+<input id="importFile" type="file" accept=".json,application/json" onchange="importJson(this.files[0])">
+<button class="btn danger" onclick="resetProgress()">پاک کردن سابقه مرور</button>
+</div>
+</div>
+
+<script>
+const KEY='vocab_flashcards_v2';
+const seed=[
+{word:'abler',meaning:'تواناتر',example:'Exercise can make you physically abler.',translation:'ورزش می‌تواند تو را از نظر جسمی تواناتر کند.',lesson:'درس ۱۰',level:'B2'},
+{word:'inhibit',meaning:'مهار کردن',example:'Stress can inhibit clear thinking.',translation:'استرس می‌تواند مانع تفکر واضح شود.',lesson:'درس ۱۰',level:'C1'},
+{word:'exhaustion',meaning:'خستگی شدید',example:'He was suffering from exhaustion.',translation:'او از خستگی شدید رنج می‌برد.',lesson:'درس ۱۰',level:'B2'},
+{word:'adjunct',meaning:'مکمل / عامل کمکی',example:'Technology is an adjunct to good teaching.',translation:'فناوری مکمل آموزش خوب است.',lesson:'درس ۱۰',level:'C1'},
+{word:'gulp',meaning:'یک‌نفس نوشیدن',example:"Don't gulp your drink; sip it slowly.",translation:'نوشیدنی را سریع نخور؛ جرعه‌جرعه بنوش.',lesson:'درس ۱۰',level:'B2'},
+{word:'solace',meaning:'تسلی، آرامش',example:'She found solace in talking to her friend.',translation:'صحبت با دوستش به او آرامش داد.',lesson:'درس ۱۰',level:'C1'},
+{word:'ambivalent',meaning:'دارای احساس دوگانه',example:"I'm ambivalent about the proposal.",translation:'درباره پیشنهاد احساس دوگانه‌ای دارم.',lesson:'درس ۱۰',level:'C1'},
+{word:'contend',meaning:'استدلال / ادعا کردن',example:'The author contends that education matters.',translation:'نویسنده استدلال می‌کند که آموزش اهمیت دارد.',lesson:'درس ۱۰',level:'C1'},
+{word:'preoccupied with',meaning:'ذهن‌مشغولِ',example:"He's preoccupied with work.",translation:'ذهن او بیش از حد درگیر کار است.',lesson:'درس ۱۰',level:'B2'},
+{word:"make up one's mind",meaning:'تصمیم گرفتن',example:'You need to make up your mind.',translation:'باید بالاخره تصمیم خودت را بگیری.',lesson:'درس ۱۰',level:'B2'}];
+let cards=[],queue=[],idx=0,revealed=false;
+function normalize(c){return {...c,id:c.id||Date.now()+Math.random(),stage:c.stage||0,dueAt:c.dueAt||0,lastRating:c.lastRating||'',knownCount:c.knownCount||0,missedCount:c.missedCount||0}}
+function load(){try{cards=(JSON.parse(localStorage.getItem(KEY))||seed).map(normalize)}catch(e){cards=seed.map(normalize)} save(); renderList()}
+function save(){localStorage.setItem(KEY,JSON.stringify(cards))}
+function showTab(id){['review','add','list','backup'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id)); if(id==='list')renderList()}
+function addCard(){const w=fWord.value.trim(),m=fMeaning.value.trim();if(!w||!m)return alert('کلمه و معنی را وارد کن');cards.unshift(normalize({word:w,meaning:m,example:fExample.value.trim(),translation:fTranslation.value.trim(),lesson:fLesson.value.trim()||'بدون درس',level:fLevel.value}));save();['fWord','fMeaning','fExample','fTranslation'].forEach(id=>document.getElementById(id).value='');alert('اضافه شد')}
+function renderList(){const q=(search?.value||'').toLowerCase();items.innerHTML=cards.filter(c=>[c.word,c.meaning,c.example,c.lesson].join(' ').toLowerCase().includes(q)).map(c=>'<div class="item"><b dir="ltr">'+esc(c.word)+'</b><div>'+esc(c.meaning)+'</div><div class="muted">'+esc(c.lesson)+' · '+esc(c.level)+'</div><button class="btn danger" onclick="delCard(\''+c.id+'\')">حذف</button></div>').join('')||'<div class="muted">کارتی نیست.</div>'}
+function delCard(id){if(confirm('حذف شود؟')){cards=cards.filter(c=>String(c.id)!==String(id));save();renderList()}}
+function startReview(){const now=Date.now(),m=mode.value;queue=cards.filter(c=>m==='all'||(m==='missed'?c.lastRating==='missed'||c.lastRating==='hard':!c.dueAt||c.dueAt<=now));if(!queue.length)return alert('فعلاً کارتی برای مرور نیست');queue.sort(()=>Math.random()-.5);idx=0;showCard()}
+function showCard(){if(idx>=queue.length){card.classList.add('hidden');ratings.classList.add('hidden');empty.classList.remove('hidden');empty.textContent='مرور تمام شد.';return} const c=queue[idx];empty.classList.add('hidden');card.classList.remove('hidden');ratings.classList.remove('hidden');word.textContent=c.word;example.textContent=c.example||'';meaning.textContent=c.meaning;translation.textContent=c.translation||'';answer.classList.add('hidden');revealed=false}
+function reveal(){revealed=true;answer.classList.remove('hidden')}
+function rate(r){if(!revealed){reveal();return} const c=queue[idx],now=Date.now();c.lastRating=r;if(r==='known'){c.stage=Math.min((c.stage||0)+1,7);c.knownCount++;const days=[1,3,7,14,30,60,120,240][c.stage]||240;c.dueAt=now+days*86400000}else if(r==='hard'){c.stage=Math.max(0,(c.stage||0)-1);c.dueAt=now+6*3600000;c.missedCount++}else{c.stage=0;c.dueAt=now+15*60000;c.missedCount++}save();idx++;showCard()}
+function speakCurrent(){const c=queue[idx];if(!c)return;if(window.Android&&Android.speak)Android.speak(c.word);else if('speechSynthesis'in window){const u=new SpeechSynthesisUtterance(c.word);u.lang='en-US';speechSynthesis.speak(u)}}
+function exportJson(){const txt=JSON.stringify(cards,null,2);if(window.Android&&Android.saveFile){Android.saveFile('vocab-backup.json',txt,'application/json')}else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download='vocab-backup.json';a.click()}}
+function importJson(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;cards=d.map(normalize);save();renderList();alert('بازیابی شد')}catch(e){alert('فایل معتبر نیست')}};r.readAsText(file)}
+function resetProgress(){if(confirm('سابقه مرور پاک شود؟')){cards.forEach(c=>{c.stage=0;c.dueAt=0;c.lastRating='';c.knownCount=0;c.missedCount=0});save();alert('انجام شد')}}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+load();
+</script>
+</body></html>
