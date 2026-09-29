@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+def ciVersionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "5").toInteger()
+
 android {
     namespace 'com.nateghi.vocabflashcards'
     compileSdk 35
@@ -10,8 +12,8 @@ android {
         applicationId 'com.nateghi.vocabflashcards'
         minSdk 24
         targetSdk 35
-        versionCode 1
-        versionName '1.0.0'
+        versionCode ciVersionCode
+        versionName "2.0.${ciVersionCode}"
     }
 
     buildTypes {
