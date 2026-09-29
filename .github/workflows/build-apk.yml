@@ -35,6 +35,18 @@ jobs:
           path: ~/.android/debug.keystore
           key: vocabflashcards-debug-keystore-v1
 
+      - name: Create stable debug signing key if missing
+        run: |
+          if [ ! -f ~/.android/debug.keystore ]; then
+            keytool -genkeypair -v \
+              -keystore ~/.android/debug.keystore \
+              -storepass android \
+              -alias androiddebugkey \
+              -keypass android \
+              -dname "CN=Vocab Flashcards Debug,O=Personal,C=US" \
+              -keyalg RSA -keysize 2048 -validity 10000
+          fi
+
       - name: Build debug APK
         run: gradle :app:assembleDebug --stacktrace
 
