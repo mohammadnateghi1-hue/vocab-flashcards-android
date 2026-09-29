@@ -2,91 +2,326 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>فلش‌کارت انگلیسی من</title>
 <style>
-body{margin:0;background:#0b1020;color:#f3f4f6;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
-.app{max-width:760px;margin:auto;padding:16px}.tabs,.actions,.ratings{display:flex;gap:8px;flex-wrap:wrap}
-button,input,textarea,select{font:inherit}.btn{border:0;border-radius:12px;padding:10px 14px}.primary{background:#60a5fa;color:#07111e}.secondary{background:#1f2937;color:#fff}.danger{background:#7f1d1d;color:#fff}
-.panel{background:#111827;border:1px solid #263247;border-radius:18px;padding:16px;margin-top:14px}
-input,textarea,select{width:100%;box-sizing:border-box;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:10px;padding:10px;margin:6px 0}
-.card{min-height:300px;padding:24px;border-radius:22px;background:#172033;border:1px solid #334155;display:flex;flex-direction:column;justify-content:center}
-.word{font-size:34px;font-weight:800;direction:ltr;text-align:left}.example{direction:ltr;text-align:left;margin-top:16px;font-size:18px}.answer{margin-top:24px;border-top:1px dashed #475569;padding-top:18px}.hidden{display:none}
-.item{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin:8px 0}.muted{color:#94a3b8;font-size:13px}
+:root{--bg:#08111f;--panel:#101b2d;--card:#15243a;--line:#2b3b53;--text:#f8fafc;--muted:#9fb0c7;--blue:#60a5fa;--green:#34d399;--red:#fb7185;--amber:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+.app{max-width:860px;margin:auto;padding:16px 14px 42px}.top{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 80%,transparent);padding:8px 0 14px}
+h1{font-size:22px;margin:0 0 10px}.tabs,.actions,.ratings,.chips{display:flex;gap:8px;flex-wrap:wrap}.tabs{overflow:auto;flex-wrap:nowrap;padding-bottom:2px}
+button,input,textarea,select{font:inherit}.btn{border:0;border-radius:12px;padding:10px 13px;cursor:pointer}.primary{background:var(--blue);color:#05111e}.secondary{background:#1f3048;color:#fff}.success{background:#166534;color:white}.danger{background:#7f1d1d;color:#fff}.warning{background:#78350f;color:#fff}
+.chip{font-size:12px;padding:6px 9px;background:#17263b;border:1px solid var(--line);border-radius:999px;color:#d7e2f0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:12px}
+input,textarea,select{width:100%;background:#0b1628;color:#fff;border:1px solid #344760;border-radius:10px;padding:10px;margin:5px 0}textarea{min-height:84px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.card{min-height:340px;padding:22px;border-radius:22px;background:var(--card);border:1px solid #38506d;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 35px #0005}
+.word{font-size:36px;font-weight:850;direction:ltr;text-align:left;word-break:break-word}.ipa{direction:ltr;text-align:left;color:#bfdbfe;font-size:18px;margin-top:6px}.pronfa{color:#c4b5fd;margin-top:4px}.pos{color:var(--muted);font-size:13px;margin-top:5px;direction:ltr;text-align:left}
+.answer{margin-top:22px;border-top:1px dashed #5a6a80;padding-top:14px}.sense{background:#0d192a;border:1px solid #30445f;border-radius:14px;padding:12px;margin:9px 0}.meaning{font-size:19px;font-weight:750}.example{direction:ltr;text-align:left;margin-top:8px;font-size:16px;line-height:1.6}.translation{margin-top:5px;color:#d8e3ef;line-height:1.7}.hidden{display:none!important}
+.item{background:#0c1728;border:1px solid #2d4059;border-radius:13px;padding:12px;margin:8px 0}.itemTitle{font-size:20px;font-weight:750;direction:ltr;text-align:left}
+.muted{color:var(--muted);font-size:13px}.mini{font-size:12px}.sectionTitle{font-weight:800;margin:6px 0 10px}
+.sense-editor{background:#0c1728;border:1px solid #32465f;border-radius:12px;padding:10px;margin:8px 0}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar>*{flex:1;min-width:120px}
+.kpi{flex:1;min-width:130px;background:#0c1728;border:1px solid #2e415b;border-radius:14px;padding:12px}.kpi b{font-size:24px;display:block}
+.codebox{direction:ltr;text-align:left;white-space:pre-wrap;background:#050b14;border:1px solid #334155;border-radius:10px;padding:10px;font-family:ui-monospace,Consolas,monospace;font-size:11px;overflow:auto}
+hr{border:0;border-top:1px solid #26394f;margin:15px 0}
+@media(max-width:620px){.grid2,.grid3{grid-template-columns:1fr}.word{font-size:32px}.app{padding:12px}.btn{padding:10px 11px}}
 </style>
 </head>
-<body><div class="app">
-<h2>فلش‌کارت انگلیسی من</h2>
-<div class="tabs">
+<body>
+<div class="app">
+<div class="top">
+<h1>فلش‌کارت انگلیسی من</h1>
+<div class="chips" id="topStats"></div>
+<div class="tabs" style="margin-top:9px">
 <button class="btn primary" onclick="showTab('review')">مرور</button>
 <button class="btn secondary" onclick="showTab('add')">افزودن</button>
 <button class="btn secondary" onclick="showTab('list')">کارت‌ها</button>
-<button class="btn secondary" onclick="showTab('backup')">پشتیبان</button>
+<button class="btn secondary" onclick="showTab('io')">Excel / ورود</button>
+<button class="btn secondary" onclick="showTab('stats')">آمار و تنظیمات</button>
+</div>
 </div>
 
 <div id="review" class="panel">
-<div class="actions"><select id="mode"><option value="due">مرور هوشمند</option><option value="all">همه</option><option value="missed">سخت‌ها</option></select><button class="btn primary" onclick="startReview()">شروع مرور</button></div>
-<div id="empty" class="muted" style="padding:25px;text-align:center">برای شروع مرور دکمه بالا را بزن.</div>
-<div id="card" class="card hidden" onclick="reveal()">
-<div id="word" class="word"></div><div id="example" class="example"></div>
-<div id="answer" class="answer hidden"><div id="meaning" style="font-size:24px;font-weight:700"></div><div id="translation" style="margin-top:8px"></div></div>
+<div class="toolbar">
+<select id="mode">
+<option value="due">موعد مرور</option>
+<option value="all">همه کارت‌ها</option>
+<option value="missed">سخت‌ها و فراموش‌شده‌ها</option>
+</select>
+<select id="reviewLesson"><option value="">همه درس‌ها</option></select>
+<button class="btn primary" onclick="startReview()">شروع مرور</button>
 </div>
-<div id="ratings" class="ratings hidden" style="margin-top:12px">
-<button class="btn secondary" onclick="event.stopPropagation();rate('hard')">سخت بود</button>
-<button class="btn danger" onclick="event.stopPropagation();rate('missed')">بلد نبودم</button>
-<button class="btn primary" onclick="event.stopPropagation();rate('known')">بلدم</button>
-<button class="btn secondary" onclick="event.stopPropagation();speakCurrent()">🔊 تلفظ</button>
-</div></div>
+<div id="empty" class="muted" style="padding:28px;text-align:center">برای شروع مرور دکمه بالا را بزن.</div>
+<div id="card" class="card hidden" onclick="reveal()">
+<div id="word" class="word"></div>
+<div id="ipa" class="ipa"></div>
+<div id="pronfa" class="pronfa"></div>
+<div id="pos" class="pos"></div>
+<div id="frontHint" class="muted" style="margin-top:20px">برای دیدن همه معنی‌ها و مثال‌ها کارت را لمس کن.</div>
+<div id="answer" class="answer hidden"></div>
+</div>
+<div id="voiceBar" class="actions hidden" style="margin-top:10px">
+<button class="btn secondary" onclick="event.stopPropagation();speakCurrent('en-US')">🔊 US</button>
+<button class="btn secondary" onclick="event.stopPropagation();speakCurrent('en-GB')">🔊 UK</button>
+<button class="btn secondary" onclick="event.stopPropagation();speakExample()">🔊 مثال</button>
+</div>
+<div id="ratings" class="ratings hidden" style="margin-top:10px">
+<button class="btn danger" onclick="event.stopPropagation();rate('again')">دوباره</button>
+<button class="btn warning" onclick="event.stopPropagation();rate('hard')">سخت</button>
+<button class="btn primary" onclick="event.stopPropagation();rate('good')">خوب</button>
+<button class="btn success" onclick="event.stopPropagation();rate('easy')">آسان</button>
+</div>
+</div>
 
 <div id="add" class="panel hidden">
-<input id="fWord" placeholder="کلمه انگلیسی">
-<input id="fMeaning" placeholder="معنی فارسی">
-<textarea id="fExample" placeholder="مثال انگلیسی"></textarea>
-<textarea id="fTranslation" placeholder="ترجمه مثال"></textarea>
-<input id="fLesson" placeholder="درس / دسته‌بندی" value="درس ۱۰">
-<select id="fLevel"><option>A1</option><option>A2</option><option>B1</option><option selected>B2</option><option>C1</option><option>C2</option></select>
-<button class="btn primary" onclick="addCard()">افزودن کارت</button>
+<div class="sectionTitle" id="formTitle">افزودن واژه</div>
+<input id="editId" type="hidden">
+<div class="grid2">
+<div><label class="muted">کلمه / عبارت</label><input id="fWord" dir="ltr" placeholder="e.g. affect"></div>
+<div><label class="muted">نقش دستوری</label><input id="fPos" dir="ltr" placeholder="verb / noun"></div>
+<div><label class="muted">IPA</label><input id="fIpa" dir="ltr" placeholder="/əˈfekt/"></div>
+<div><label class="muted">تلفظ نوشتاری فارسی (اختیاری)</label><input id="fPronFa" placeholder="اَفِکت"></div>
+<div><label class="muted">درس</label><input id="fLesson" value="درس ۱۰ — Is There a Safe Way to Drink?"></div>
+<div><label class="muted">سطح</label><select id="fLevel"><option>A1</option><option>A2</option><option>B1</option><option selected>B2</option><option>C1</option><option>C2</option></select></div>
+</div>
+<label class="muted">یادداشت</label><textarea id="fNotes" placeholder="نکته، collocation، توضیح..."></textarea>
+<div class="sectionTitle">معنی‌ها و مثال‌ها</div>
+<div id="senseEditors"></div>
+<button class="btn secondary" onclick="addSenseEditor()">+ معنی دیگر</button>
+<hr>
+<div class="actions">
+<button class="btn primary" onclick="saveCardForm()">ذخیره کارت</button>
+<button class="btn secondary hidden" id="cancelEdit" onclick="resetForm()">لغو ویرایش</button>
+</div>
 </div>
 
-<div id="list" class="panel hidden"><input id="search" placeholder="جستجو..." oninput="renderList()"><div id="items"></div></div>
+<div id="list" class="panel hidden">
+<div class="grid3">
+<input id="search" placeholder="جستجو..." oninput="renderList()">
+<select id="listLesson" onchange="renderList()"><option value="">همه درس‌ها</option></select>
+<select id="listLevel" onchange="renderList()"><option value="">همه سطوح</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select>
+</div>
+<div class="muted" id="listCount"></div>
+<div id="items"></div>
+</div>
 
-<div id="backup" class="panel hidden">
+<div id="io" class="panel hidden">
+<div class="sectionTitle">Excel واقعی (.xlsx)</div>
+<div class="actions">
+<button class="btn primary" onclick="importExcel()">وارد کردن Excel</button>
+<button class="btn secondary" onclick="exportExcel()">خروجی Excel از همه کارت‌ها</button>
+<button class="btn secondary" onclick="downloadExcelTemplate()">دانلود قالب خالی Excel</button>
+</div>
+<p class="muted">هر معنی یک ردیف جدا دارد. اگر یک کلمه ۴ معنی داشته باشد، همان کلمه در ۴ ردیف تکرار می‌شود و اپ آنها را در یک فلش‌کارت گروه‌بندی می‌کند.</p>
+<div class="codebox">word	ipa	pronunciation_fa	part_of_speech	meaning_fa	example_en	example_fa	lesson	level	sense_order	notes</div>
+<hr>
+<div class="sectionTitle">ورود مستقیم از همین چت (TSV)</div>
+<p class="muted">بلوک استانداردی که من از این به بعد می‌نویسم را کامل کپی کن و اینجا Paste کن.</p>
+<textarea id="tsvInput" dir="ltr" style="min-height:170px" placeholder="word&#9;ipa&#9;pronunciation_fa..."></textarea>
+<div class="actions">
+<button class="btn primary" onclick="importTSV()">اضافه کردن TSV</button>
+<button class="btn secondary" onclick="copyHeader()">کپی هدر استاندارد</button>
+</div>
+<hr>
+<div class="sectionTitle">پشتیبان کامل</div>
+<div class="actions">
 <button class="btn secondary" onclick="exportJson()">خروجی JSON</button>
-<input id="importFile" type="file" accept=".json,application/json" onchange="importJson(this.files[0])">
-<button class="btn danger" onclick="resetProgress()">پاک کردن سابقه مرور</button>
+<label class="btn secondary" style="display:inline-block">ورود JSON<input id="importFile" type="file" accept=".json,application/json" onchange="importJson(this.files[0])" style="display:none"></label>
+</div>
+</div>
+
+<div id="stats" class="panel hidden">
+<div class="sectionTitle">آمار</div>
+<div class="actions" id="kpis"></div>
+<hr>
+<div class="sectionTitle">تلفظ</div>
+<div class="grid2">
+<div><label class="muted">لهجه پیش‌فرض</label><select id="accent" onchange="saveSettings()"><option value="en-US">American English (US)</option><option value="en-GB">British English (UK)</option></select></div>
+<div><label class="muted">سرعت صدا: <span id="speedLabel"></span></label><input id="speechRate" type="range" min="0.60" max="1.10" step="0.05" value="0.85" oninput="speedLabel.textContent=this.value;saveSettings()"></div>
+</div>
+<label><input id="autoSpeak" type="checkbox" onchange="saveSettings()" style="width:auto"> هنگام نمایش کارت، واژه خودکار تلفظ شود</label>
+<div style="margin-top:9px"><button class="btn secondary" onclick="openTtsSettings()">تنظیم موتور و صدای Android</button></div>
+<p class="muted">اپ بهترین صدای نصب‌شده برای US یا UK را انتخاب می‌کند. کیفیت نهایی به موتور Text-to-Speech گوشی هم وابسته است.</p>
+<hr>
+<div class="sectionTitle">مدیریت مرور</div>
+<button class="btn danger" onclick="resetProgress()">پاک کردن فقط سابقه مرور</button>
 </div>
 </div>
 
 <script>
-const KEY='vocab_flashcards_v2';
-const seed=[
-{word:'abler',meaning:'تواناتر',example:'Exercise can make you physically abler.',translation:'ورزش می‌تواند تو را از نظر جسمی تواناتر کند.',lesson:'درس ۱۰',level:'B2'},
-{word:'inhibit',meaning:'مهار کردن',example:'Stress can inhibit clear thinking.',translation:'استرس می‌تواند مانع تفکر واضح شود.',lesson:'درس ۱۰',level:'C1'},
-{word:'exhaustion',meaning:'خستگی شدید',example:'He was suffering from exhaustion.',translation:'او از خستگی شدید رنج می‌برد.',lesson:'درس ۱۰',level:'B2'},
-{word:'adjunct',meaning:'مکمل / عامل کمکی',example:'Technology is an adjunct to good teaching.',translation:'فناوری مکمل آموزش خوب است.',lesson:'درس ۱۰',level:'C1'},
-{word:'gulp',meaning:'یک‌نفس نوشیدن',example:"Don't gulp your drink; sip it slowly.",translation:'نوشیدنی را سریع نخور؛ جرعه‌جرعه بنوش.',lesson:'درس ۱۰',level:'B2'},
-{word:'solace',meaning:'تسلی، آرامش',example:'She found solace in talking to her friend.',translation:'صحبت با دوستش به او آرامش داد.',lesson:'درس ۱۰',level:'C1'},
-{word:'ambivalent',meaning:'دارای احساس دوگانه',example:"I'm ambivalent about the proposal.",translation:'درباره پیشنهاد احساس دوگانه‌ای دارم.',lesson:'درس ۱۰',level:'C1'},
-{word:'contend',meaning:'استدلال / ادعا کردن',example:'The author contends that education matters.',translation:'نویسنده استدلال می‌کند که آموزش اهمیت دارد.',lesson:'درس ۱۰',level:'C1'},
-{word:'preoccupied with',meaning:'ذهن‌مشغولِ',example:"He's preoccupied with work.",translation:'ذهن او بیش از حد درگیر کار است.',lesson:'درس ۱۰',level:'B2'},
-{word:"make up one's mind",meaning:'تصمیم گرفتن',example:'You need to make up your mind.',translation:'باید بالاخره تصمیم خودت را بگیری.',lesson:'درس ۱۰',level:'B2'}];
-let cards=[],queue=[],idx=0,revealed=false;
-function normalize(c){return {...c,id:c.id||Date.now()+Math.random(),stage:c.stage||0,dueAt:c.dueAt||0,lastRating:c.lastRating||'',knownCount:c.knownCount||0,missedCount:c.missedCount||0}}
-function load(){try{cards=(JSON.parse(localStorage.getItem(KEY))||seed).map(normalize)}catch(e){cards=seed.map(normalize)} save(); renderList()}
-function save(){localStorage.setItem(KEY,JSON.stringify(cards))}
-function showTab(id){['review','add','list','backup'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id)); if(id==='list')renderList()}
-function addCard(){const w=fWord.value.trim(),m=fMeaning.value.trim();if(!w||!m)return alert('کلمه و معنی را وارد کن');cards.unshift(normalize({word:w,meaning:m,example:fExample.value.trim(),translation:fTranslation.value.trim(),lesson:fLesson.value.trim()||'بدون درس',level:fLevel.value}));save();['fWord','fMeaning','fExample','fTranslation'].forEach(id=>document.getElementById(id).value='');alert('اضافه شد')}
-function renderList(){const q=(search?.value||'').toLowerCase();items.innerHTML=cards.filter(c=>[c.word,c.meaning,c.example,c.lesson].join(' ').toLowerCase().includes(q)).map(c=>'<div class="item"><b dir="ltr">'+esc(c.word)+'</b><div>'+esc(c.meaning)+'</div><div class="muted">'+esc(c.lesson)+' · '+esc(c.level)+'</div><button class="btn danger" onclick="delCard(\''+c.id+'\')">حذف</button></div>').join('')||'<div class="muted">کارتی نیست.</div>'}
-function delCard(id){if(confirm('حذف شود؟')){cards=cards.filter(c=>String(c.id)!==String(id));save();renderList()}}
-function startReview(){const now=Date.now(),m=mode.value;queue=cards.filter(c=>m==='all'||(m==='missed'?c.lastRating==='missed'||c.lastRating==='hard':!c.dueAt||c.dueAt<=now));if(!queue.length)return alert('فعلاً کارتی برای مرور نیست');queue.sort(()=>Math.random()-.5);idx=0;showCard()}
-function showCard(){if(idx>=queue.length){card.classList.add('hidden');ratings.classList.add('hidden');empty.classList.remove('hidden');empty.textContent='مرور تمام شد.';return} const c=queue[idx];empty.classList.add('hidden');card.classList.remove('hidden');ratings.classList.remove('hidden');word.textContent=c.word;example.textContent=c.example||'';meaning.textContent=c.meaning;translation.textContent=c.translation||'';answer.classList.add('hidden');revealed=false}
-function reveal(){revealed=true;answer.classList.remove('hidden')}
-function rate(r){if(!revealed){reveal();return} const c=queue[idx],now=Date.now();c.lastRating=r;if(r==='known'){c.stage=Math.min((c.stage||0)+1,7);c.knownCount++;const days=[1,3,7,14,30,60,120,240][c.stage]||240;c.dueAt=now+days*86400000}else if(r==='hard'){c.stage=Math.max(0,(c.stage||0)-1);c.dueAt=now+6*3600000;c.missedCount++}else{c.stage=0;c.dueAt=now+15*60000;c.missedCount++}save();idx++;showCard()}
-function speakCurrent(){const c=queue[idx];if(!c)return;if(window.Android&&Android.speak)Android.speak(c.word);else if('speechSynthesis'in window){const u=new SpeechSynthesisUtterance(c.word);u.lang='en-US';speechSynthesis.speak(u)}}
-function exportJson(){const txt=JSON.stringify(cards,null,2);if(window.Android&&Android.saveFile){Android.saveFile('vocab-backup.json',txt,'application/json')}else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download='vocab-backup.json';a.click()}}
-function importJson(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;cards=d.map(normalize);save();renderList();alert('بازیابی شد')}catch(e){alert('فایل معتبر نیست')}};r.readAsText(file)}
-function resetProgress(){if(confirm('سابقه مرور پاک شود؟')){cards.forEach(c=>{c.stage=0;c.dueAt=0;c.lastRating='';c.knownCount=0;c.missedCount=0});save();alert('انجام شد')}}
+const KEY='vocab_flashcards_v3';
+const OLD_KEY='vocab_flashcards_v2';
+const SETTINGS_KEY='vocab_flashcards_settings_v1';
+const SEED_VER_KEY='vocab_seed_version';
+const HEADER=['word','ipa','pronunciation_fa','part_of_speech','meaning_fa','example_en','example_fa','lesson','level','sense_order','notes'];
+let cards=[], queue=[], idx=0, revealed=false;
+let settings={accent:'en-US',speechRate:.85,autoSpeak:false};
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function cleanSense(x){return {meaning:(x?.meaning||'').trim(),example:(x?.example||'').trim(),translation:(x?.translation||'').trim()}}
+function normalize(c){
+  const senses=(Array.isArray(c.senses)?c.senses:[{meaning:c.meaning||'',example:c.example||'',translation:c.translation||''}]).map(cleanSense).filter(x=>x.meaning||x.example||x.translation);
+  return {
+    id:c.id||uid(),word:(c.word||'').trim(),ipa:(c.ipa||'').trim(),pronunciationFa:(c.pronunciationFa||c.pronunciation_fa||'').trim(),
+    partOfSpeech:(c.partOfSpeech||c.part_of_speech||'').trim(),lesson:(c.lesson||'بدون درس').trim(),level:c.level||'B2',notes:(c.notes||'').trim(),
+    senses:senses.length?senses:[{meaning:'',example:'',translation:''}],
+    stage:Number(c.stage||0),dueAt:Number(c.dueAt||0),lastRating:c.lastRating||'',knownCount:Number(c.knownCount||0),
+    missedCount:Number(c.missedCount||0),reviewCount:Number(c.reviewCount||0),createdAt:c.createdAt||Date.now(),updatedAt:c.updatedAt||Date.now()
+  }
+}
+function cardKey(c){return (c.word||'').trim().toLowerCase()+'|'+(c.lesson||'').trim().toLowerCase()}
+function senseKey(s){return (s.meaning||'').trim().toLowerCase()+'|'+(s.example||'').trim().toLowerCase()}
+function mergeSeed(existing, seedCards){
+  const map=new Map(existing.map(c=>[cardKey(c),c]));
+  seedCards.map(normalize).forEach(s=>{
+    const k=cardKey(s), cur=map.get(k);
+    if(!cur){existing.push(s);map.set(k,s);return}
+    if(!cur.ipa&&s.ipa)cur.ipa=s.ipa;
+    if(!cur.partOfSpeech&&s.partOfSpeech)cur.partOfSpeech=s.partOfSpeech;
+    if(!cur.pronunciationFa&&s.pronunciationFa)cur.pronunciationFa=s.pronunciationFa;
+    const have=new Set(cur.senses.map(senseKey));
+    s.senses.forEach(x=>{if(!have.has(senseKey(x))){cur.senses.push(x);have.add(senseKey(x))}})
+  });
+  return existing;
+}
+function loadSeedPayload(){
+  try{
+    if(window.Android&&Android.getSeedData)return JSON.parse(Android.getSeedData());
+  }catch(e){}
+  return {version:0,cards:[]};
+}
+function load(){
+  try{settings={...settings,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch(e){}
+  accent.value=settings.accent; speechRate.value=settings.speechRate; speedLabel.textContent=settings.speechRate; autoSpeak.checked=!!settings.autoSpeak;
+  let stored=null;
+  try{stored=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+  if(!Array.isArray(stored)){try{stored=JSON.parse(localStorage.getItem(OLD_KEY)||'null')}catch(e){}}
+  if(!Array.isArray(stored))stored=[];
+  cards=stored.map(normalize);
+  const seed=loadSeedPayload();
+  cards=mergeSeed(cards,Array.isArray(seed.cards)?seed.cards:[]);
+  localStorage.setItem(SEED_VER_KEY,String(seed.version||0));
+  save(); resetForm(); refreshFilters(); renderList(); updateStats();
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(cards));updateStats()}
+function saveSettings(){settings={accent:accent.value,speechRate:Number(speechRate.value),autoSpeak:autoSpeak.checked};localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings))}
+function showTab(id){['review','add','list','io','stats'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));if(id==='list')renderList();if(id==='stats')updateStats()}
+function updateStats(){
+  const now=Date.now(),due=cards.filter(c=>!c.dueAt||c.dueAt<=now).length,hard=cards.filter(c=>c.lastRating==='again'||c.lastRating==='hard').length;
+  const mastered=cards.filter(c=>c.stage>=6).length;
+  topStats.innerHTML='<span class="chip">'+cards.length+' واژه/عبارت</span><span class="chip">'+due+' موعد مرور</span><span class="chip">'+hard+' سخت</span>';
+  kpis.innerHTML='<div class="kpi"><b>'+cards.length+'</b>کل کارت‌ها</div><div class="kpi"><b>'+due+'</b>موعد امروز</div><div class="kpi"><b>'+mastered+'</b>تسلط بالا</div><div class="kpi"><b>'+cards.reduce((a,c)=>a+c.reviewCount,0)+'</b>مرور انجام‌شده</div>';
+}
+function refreshFilters(){
+  const lessons=[...new Set(cards.map(c=>c.lesson).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fa'));
+  [reviewLesson,listLesson].forEach(sel=>{const old=sel.value;sel.innerHTML='<option value="">همه درس‌ها</option>'+lessons.map(x=>'<option>'+esc(x)+'</option>').join('');sel.value=old});
+}
+
+function addSenseEditor(sense={meaning:'',example:'',translation:''}){
+  const wrap=document.createElement('div');wrap.className='sense-editor';
+  wrap.innerHTML='<input class="sMeaning" placeholder="معنی فارسی" value="'+attr(sense.meaning)+'"><textarea class="sExample" dir="ltr" placeholder="Example in English">'+esc(sense.example)+'</textarea><textarea class="sTranslation" placeholder="ترجمه مثال">'+esc(sense.translation)+'</textarea><button class="btn danger mini" type="button" onclick="this.parentElement.remove()">حذف این معنی</button>';
+  senseEditors.appendChild(wrap);
+}
+function resetForm(){
+  editId.value='';formTitle.textContent='افزودن واژه';cancelEdit.classList.add('hidden');
+  fWord.value='';fPos.value='';fIpa.value='';fPronFa.value='';fLesson.value='درس ۱۰ — Is There a Safe Way to Drink?';fLevel.value='B2';fNotes.value='';
+  senseEditors.innerHTML='';addSenseEditor();
+}
+function collectSenses(){
+  return [...document.querySelectorAll('.sense-editor')].map(x=>({meaning:x.querySelector('.sMeaning').value.trim(),example:x.querySelector('.sExample').value.trim(),translation:x.querySelector('.sTranslation').value.trim()})).filter(x=>x.meaning||x.example||x.translation)
+}
+function saveCardForm(){
+  const w=fWord.value.trim(), senses=collectSenses();
+  if(!w)return alert('کلمه یا عبارت را وارد کن');
+  if(!senses.length||!senses.some(x=>x.meaning))return alert('حداقل یک معنی فارسی وارد کن');
+  const id=editId.value;
+  const base={word:w,ipa:fIpa.value.trim(),pronunciationFa:fPronFa.value.trim(),partOfSpeech:fPos.value.trim(),lesson:fLesson.value.trim()||'بدون درس',level:fLevel.value,notes:fNotes.value.trim(),senses,updatedAt:Date.now()};
+  if(id){
+    const i=cards.findIndex(c=>String(c.id)===id); if(i>=0)cards[i]=normalize({...cards[i],...base,id:cards[i].id});
+  }else cards.unshift(normalize(base));
+  save();refreshFilters();resetForm();showTab('list');renderList();
+}
+function editCard(id){
+  const c=cards.find(x=>String(x.id)===String(id));if(!c)return;
+  editId.value=c.id;formTitle.textContent='ویرایش: '+c.word;cancelEdit.classList.remove('hidden');
+  fWord.value=c.word;fPos.value=c.partOfSpeech;fIpa.value=c.ipa;fPronFa.value=c.pronunciationFa;fLesson.value=c.lesson;fLevel.value=c.level;fNotes.value=c.notes;
+  senseEditors.innerHTML='';c.senses.forEach(addSenseEditor);showTab('add');window.scrollTo({top:0,behavior:'smooth'});
+}
+function delCard(id){if(confirm('این کارت و سابقه مرورش حذف شود؟')){cards=cards.filter(c=>String(c.id)!==String(id));save();refreshFilters();renderList()}}
+function renderList(){
+  const q=(search?.value||'').trim().toLowerCase(),lesson=listLesson?.value||'',level=listLevel?.value||'';
+  const filtered=cards.filter(c=>(!lesson||c.lesson===lesson)&&(!level||c.level===level)&&(!q||[c.word,c.ipa,c.pronunciationFa,c.partOfSpeech,c.lesson,c.notes,...c.senses.flatMap(s=>[s.meaning,s.example,s.translation])].join(' ').toLowerCase().includes(q)));
+  listCount.textContent=filtered.length+' مورد';
+  items.innerHTML=filtered.slice(0,800).map(c=>'<div class="item"><div class="itemTitle">'+esc(c.word)+'</div><div class="ipa">'+esc(c.ipa)+'</div><div class="muted">'+esc(c.partOfSpeech)+' · '+esc(c.level)+' · '+esc(c.lesson)+' · '+c.senses.length+' معنی</div><div style="margin-top:6px">'+c.senses.slice(0,3).map((s,i)=>(i+1)+'. '+esc(s.meaning)).join('<br>')+(c.senses.length>3?'<br>…':'')+'</div><div class="actions" style="margin-top:8px"><button class="btn secondary mini" onclick="speakCardById(\''+c.id+'\')">🔊</button><button class="btn primary mini" onclick="editCard(\''+c.id+'\')">ویرایش</button><button class="btn danger mini" onclick="delCard(\''+c.id+'\')">حذف</button></div></div>').join('')||'<div class="muted">موردی پیدا نشد.</div>';
+}
+
+function startReview(){
+  const now=Date.now(),m=mode.value,lesson=reviewLesson.value;
+  queue=cards.filter(c=>(!lesson||c.lesson===lesson)&&(m==='all'||(m==='missed'?(c.lastRating==='again'||c.lastRating==='hard'):(!c.dueAt||c.dueAt<=now))));
+  if(!queue.length)return alert('فعلاً کارتی برای این فیلتر وجود ندارد.');
+  queue.sort((a,b)=>(a.dueAt||0)-(b.dueAt||0)||Math.random()-.5);idx=0;showCard();
+}
+function showCard(){
+  if(idx>=queue.length){card.classList.add('hidden');ratings.classList.add('hidden');voiceBar.classList.add('hidden');empty.classList.remove('hidden');empty.textContent='مرور تمام شد. آفرین!';updateStats();return}
+  const c=queue[idx];empty.classList.add('hidden');card.classList.remove('hidden');ratings.classList.remove('hidden');voiceBar.classList.remove('hidden');
+  word.textContent=c.word;ipa.textContent=c.ipa?'/ '+c.ipa+' /':'';pronfa.textContent=c.pronunciationFa?'تلفظ: '+c.pronunciationFa:'';pos.textContent=[c.partOfSpeech,c.level,c.lesson].filter(Boolean).join(' · ');
+  answer.innerHTML=c.senses.map((s,i)=>'<div class="sense"><div class="meaning">'+(i+1)+'. '+esc(s.meaning)+'</div>'+(s.example?'<div class="example">'+esc(s.example)+'</div>':'')+(s.translation?'<div class="translation">'+esc(s.translation)+'</div>':'')+'</div>').join('')+(c.notes?'<div class="muted">نکته: '+esc(c.notes)+'</div>':'');
+  answer.classList.add('hidden');frontHint.classList.remove('hidden');revealed=false;
+  if(settings.autoSpeak)setTimeout(()=>speakCurrent(settings.accent),180);
+}
+function reveal(){if(!revealed){revealed=true;answer.classList.remove('hidden');frontHint.classList.add('hidden')}}
+function nextDelay(c,r){
+  const now=Date.now();
+  if(r==='again'){c.stage=Math.max(0,c.stage-1);return now+10*60*1000}
+  if(r==='hard'){c.stage=Math.max(1,c.stage);return now+Math.max(1,[1,2,4,7,12,20,35,60][Math.min(c.stage,7)])*86400000}
+  if(r==='good'){c.stage=Math.min(c.stage+1,10);return now+[1,3,7,14,30,60,120,240,365,540,720][Math.min(c.stage,10)]*86400000}
+  c.stage=Math.min(c.stage+2,10);return now+[3,7,14,30,60,120,240,365,540,720,1080][Math.min(c.stage,10)]*86400000
+}
+function rate(r){
+  if(!revealed){reveal();return}
+  const c=queue[idx];c.lastRating=r;c.reviewCount++;if(r==='again'){c.missedCount++}else if(r==='hard'){c.missedCount++}else c.knownCount++;
+  c.dueAt=nextDelay(c,r);c.updatedAt=Date.now();save();idx++;showCard();
+}
+
+function speak(text,locale=settings.accent){if(!text)return;if(window.Android&&Android.speak)Android.speak(text,locale,Number(settings.speechRate));else if('speechSynthesis'in window){let u=new SpeechSynthesisUtterance(text);u.lang=locale;u.rate=settings.speechRate;speechSynthesis.speak(u)}}
+function speakCurrent(locale){const c=queue[idx];if(c)speak(c.word,locale)}
+function speakExample(){const c=queue[idx];if(!c)return;const ex=c.senses.find(s=>s.example)?.example;if(ex)speak(ex,settings.accent)}
+function speakCardById(id){const c=cards.find(x=>String(x.id)===String(id));if(c)speak(c.word)}
+function openTtsSettings(){if(window.Android&&Android.openTtsSettings)Android.openTtsSettings()}
+
+function flattenRows(){
+  const rows=[];cards.forEach(c=>c.senses.forEach((s,i)=>rows.push({word:c.word,ipa:c.ipa,pronunciation_fa:c.pronunciationFa,part_of_speech:c.partOfSpeech,meaning_fa:s.meaning,example_en:s.example,example_fa:s.translation,lesson:c.lesson,level:c.level,sense_order:String(i+1),notes:c.notes})));return rows
+}
+function importRows(rows){
+  if(!Array.isArray(rows))throw new Error('rows');
+  const grouped=new Map();
+  rows.forEach(r=>{
+    const word=String(r.word||'').trim(),meaning=String(r.meaning_fa||'').trim();if(!word||!meaning)return;
+    const lesson=String(r.lesson||'بدون درس').trim(),k=word.toLowerCase()+'|'+lesson.toLowerCase();
+    if(!grouped.has(k))grouped.set(k,{word,ipa:String(r.ipa||'').trim(),pronunciationFa:String(r.pronunciation_fa||'').trim(),partOfSpeech:String(r.part_of_speech||'').trim(),lesson,level:String(r.level||'B2').trim(),notes:String(r.notes||'').trim(),senses:[]});
+    const g=grouped.get(k);g.senses.push({meaning,example:String(r.example_en||'').trim(),translation:String(r.example_fa||'').trim()});
+  });
+  let added=0,merged=0;const map=new Map(cards.map(c=>[cardKey(c),c]));
+  grouped.forEach(g=>{const k=cardKey(g),cur=map.get(k);if(!cur){const n=normalize(g);cards.unshift(n);map.set(k,n);added++}else{if(!cur.ipa&&g.ipa)cur.ipa=g.ipa;if(!cur.pronunciationFa&&g.pronunciationFa)cur.pronunciationFa=g.pronunciationFa;if(!cur.partOfSpeech&&g.partOfSpeech)cur.partOfSpeech=g.partOfSpeech;if(!cur.notes&&g.notes)cur.notes=g.notes;const have=new Set(cur.senses.map(senseKey));g.senses.forEach(s=>{if(!have.has(senseKey(s))){cur.senses.push(s);have.add(senseKey(s));merged++}})}})
+  save();refreshFilters();renderList();alert(added+' کارت جدید و '+merged+' معنی جدید اضافه شد.');
+}
+function importExcel(){if(window.Android&&Android.pickExcel)Android.pickExcel();else alert('ورود مستقیم Excel فقط در نسخه Android فعال است.')}
+window.onExcelImportedFromJson=function(json){try{importRows(JSON.parse(json))}catch(e){alert('ساختار فایل Excel معتبر نیست. از قالب استاندارد استفاده کن.')}}
+function exportExcel(){if(window.Android&&Android.exportXlsx)Android.exportXlsx(JSON.stringify(flattenRows()),'vocabulary-export.xlsx');else alert('این قابلیت در نسخه Android فعال است.')}
+function downloadExcelTemplate(){if(window.Android&&Android.exportXlsx)Android.exportXlsx('[]','vocabulary-template.xlsx')}
+function parseTSV(txt){
+  const lines=txt.replace(/\r/g,'').split('\n').filter(x=>x.trim());if(lines.length<2)return[];
+  const headers=lines[0].split('\t').map(x=>x.trim());return lines.slice(1).map(line=>{const vals=line.split('\t');const o={};headers.forEach((h,i)=>o[h]=vals[i]??'');return o})
+}
+function importTSV(){try{const rows=parseTSV(tsvInput.value);if(!rows.length)return alert('داده‌ای پیدا نشد. هدر استاندارد و ردیف‌ها را کامل Paste کن.');importRows(rows);tsvInput.value=''}catch(e){alert('فرمت TSV معتبر نیست.')}}
+function copyHeader(){const h=HEADER.join('\t');navigator.clipboard?.writeText(h);tsvInput.value=h+'\n';alert('هدر استاندارد آماده شد.')}
+function exportJson(){const payload={version:3,exportedAt:new Date().toISOString(),cards};const txt=JSON.stringify(payload,null,2);if(window.Android&&Android.saveFile)Android.saveFile('vocab-backup.json',txt,'application/json')}
+function importJson(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);const arr=Array.isArray(d)?d:d.cards;if(!Array.isArray(arr))throw 0;cards=arr.map(normalize);save();refreshFilters();renderList();alert('پشتیبان بازیابی شد.')}catch(e){alert('فایل JSON معتبر نیست.')}};r.readAsText(file)}
+function resetProgress(){if(confirm('فقط سابقه مرور پاک شود؟ خود واژه‌ها باقی می‌مانند.')){cards.forEach(c=>{c.stage=0;c.dueAt=0;c.lastRating='';c.knownCount=0;c.missedCount=0;c.reviewCount=0});save();alert('انجام شد.')}}
+
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function attr(s=''){return esc(s).replace(/\n/g,' ')}
 load();
 </script>
-</body></html>
+</body>
+</html>
