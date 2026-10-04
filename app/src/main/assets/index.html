@@ -1,327 +1,244 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>فلش‌کارت انگلیسی من</title>
-<style>
-:root{--bg:#08111f;--panel:#101b2d;--card:#15243a;--line:#2b3b53;--text:#f8fafc;--muted:#9fb0c7;--blue:#60a5fa;--green:#34d399;--red:#fb7185;--amber:#fbbf24}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
-.app{max-width:860px;margin:auto;padding:16px 14px 42px}.top{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 80%,transparent);padding:8px 0 14px}
-h1{font-size:22px;margin:0 0 10px}.tabs,.actions,.ratings,.chips{display:flex;gap:8px;flex-wrap:wrap}.tabs{overflow:auto;flex-wrap:nowrap;padding-bottom:2px}
-button,input,textarea,select{font:inherit}.btn{border:0;border-radius:12px;padding:10px 13px;cursor:pointer}.primary{background:var(--blue);color:#05111e}.secondary{background:#1f3048;color:#fff}.success{background:#166534;color:white}.danger{background:#7f1d1d;color:#fff}.warning{background:#78350f;color:#fff}
-.chip{font-size:12px;padding:6px 9px;background:#17263b;border:1px solid var(--line);border-radius:999px;color:#d7e2f0}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:12px}
-input,textarea,select{width:100%;background:#0b1628;color:#fff;border:1px solid #344760;border-radius:10px;padding:10px;margin:5px 0}textarea{min-height:84px;resize:vertical}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.card{min-height:340px;padding:22px;border-radius:22px;background:var(--card);border:1px solid #38506d;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 35px #0005}
-.word{font-size:36px;font-weight:850;direction:ltr;text-align:left;word-break:break-word}.ipa{direction:ltr;text-align:left;color:#bfdbfe;font-size:18px;margin-top:6px}.pronfa{color:#c4b5fd;margin-top:4px}.pos{color:var(--muted);font-size:13px;margin-top:5px;direction:ltr;text-align:left}
-.answer{margin-top:22px;border-top:1px dashed #5a6a80;padding-top:14px}.sense{background:#0d192a;border:1px solid #30445f;border-radius:14px;padding:12px;margin:9px 0}.meaning{font-size:19px;font-weight:750}.example{direction:ltr;text-align:left;margin-top:8px;font-size:16px;line-height:1.6}.translation{margin-top:5px;color:#d8e3ef;line-height:1.7}.hidden{display:none!important}
-.item{background:#0c1728;border:1px solid #2d4059;border-radius:13px;padding:12px;margin:8px 0}.itemTitle{font-size:20px;font-weight:750;direction:ltr;text-align:left}
-.muted{color:var(--muted);font-size:13px}.mini{font-size:12px}.sectionTitle{font-weight:800;margin:6px 0 10px}
-.sense-editor{background:#0c1728;border:1px solid #32465f;border-radius:12px;padding:10px;margin:8px 0}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar>*{flex:1;min-width:120px}
-.kpi{flex:1;min-width:130px;background:#0c1728;border:1px solid #2e415b;border-radius:14px;padding:12px}.kpi b{font-size:24px;display:block}
-.codebox{direction:ltr;text-align:left;white-space:pre-wrap;background:#050b14;border:1px solid #334155;border-radius:10px;padding:10px;font-family:ui-monospace,Consolas,monospace;font-size:11px;overflow:auto}
-hr{border:0;border-top:1px solid #26394f;margin:15px 0}
-@media(max-width:620px){.grid2,.grid3{grid-template-columns:1fr}.word{font-size:32px}.app{padding:12px}.btn{padding:10px 11px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>فلش‌کارت انگلیسی من</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="app">
-<div class="top">
-<h1>فلش‌کارت انگلیسی من</h1>
-<div class="chips" id="topStats"></div>
-<div class="tabs" style="margin-top:9px">
-<button class="btn primary" onclick="showTab('review')">مرور</button>
-<button class="btn secondary" onclick="showTab('add')">افزودن</button>
-<button class="btn secondary" onclick="showTab('list')">کارت‌ها</button>
-<button class="btn secondary" onclick="showTab('io')">Excel / ورود</button>
-<button class="btn secondary" onclick="showTab('stats')">آمار و تنظیمات</button>
-</div>
-</div>
+  <div class="top">
+    <div class="brand">
+      <h1>فلش‌کارت انگلیسی من</h1>
+      <span class="version">Phase 1 · v3</span>
+    </div>
+    <div class="chips" id="topStats"></div>
+    <div class="tabs">
+      <button class="btn primary" onclick="showTab('review')">مرور</button>
+      <button class="btn secondary" onclick="showTab('add')">افزودن</button>
+      <button class="btn secondary" onclick="showTab('library')">کتابخانه</button>
+      <button class="btn secondary" onclick="showTab('io')">Excel / TSV</button>
+      <button class="btn secondary" onclick="showTab('stats')">آمار و تنظیمات</button>
+    </div>
+  </div>
 
-<div id="review" class="panel">
-<div class="toolbar">
-<select id="mode">
-<option value="due">موعد مرور</option>
-<option value="all">همه کارت‌ها</option>
-<option value="missed">سخت‌ها و فراموش‌شده‌ها</option>
-</select>
-<select id="reviewLesson"><option value="">همه درس‌ها</option></select>
-<button class="btn primary" onclick="startReview()">شروع مرور</button>
-</div>
-<div id="empty" class="muted" style="padding:28px;text-align:center">برای شروع مرور دکمه بالا را بزن.</div>
-<div id="card" class="card hidden" onclick="reveal()">
-<div id="word" class="word"></div>
-<div id="ipa" class="ipa"></div>
-<div id="pronfa" class="pronfa"></div>
-<div id="pos" class="pos"></div>
-<div id="frontHint" class="muted" style="margin-top:20px">برای دیدن همه معنی‌ها و مثال‌ها کارت را لمس کن.</div>
-<div id="answer" class="answer hidden"></div>
-</div>
-<div id="voiceBar" class="actions hidden" style="margin-top:10px">
-<button class="btn secondary" onclick="event.stopPropagation();speakCurrent('en-US')">🔊 US</button>
-<button class="btn secondary" onclick="event.stopPropagation();speakCurrent('en-GB')">🔊 UK</button>
-<button class="btn secondary" onclick="event.stopPropagation();speakExample()">🔊 مثال</button>
-</div>
-<div id="ratings" class="ratings hidden" style="margin-top:10px">
-<button class="btn danger" onclick="event.stopPropagation();rate('again')">دوباره</button>
-<button class="btn warning" onclick="event.stopPropagation();rate('hard')">سخت</button>
-<button class="btn primary" onclick="event.stopPropagation();rate('good')">خوب</button>
-<button class="btn success" onclick="event.stopPropagation();rate('easy')">آسان</button>
-</div>
-</div>
+  <section id="review" class="panel hero">
+    <div class="sectionTitle">مرور هوشمند فاز ۱</div>
+    <div class="grid3">
+      <div>
+        <label class="muted">نوع کارت</label>
+        <select id="reviewType">
+          <option value="mixed">ترکیبی هوشمند</option>
+          <option value="master">Master Card — همه معنی‌ها</option>
+          <option value="sense">Sense Card — هر معنی جدا</option>
+          <option value="reverse">Reverse — فارسی ← انگلیسی</option>
+          <option value="typed">Typed Answer — تایپ انگلیسی</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">دامنه مرور</label>
+        <select id="reviewScope">
+          <option value="due">موعد مرور</option>
+          <option value="all">همه</option>
+          <option value="hard">سخت و فراموش‌شده</option>
+          <option value="leech">Leechها</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">درس</label>
+        <select id="reviewLesson"><option value="">همه درس‌ها</option></select>
+      </div>
+    </div>
+    <div class="actions" style="margin-top:8px">
+      <button class="btn primary" onclick="startReview()">شروع مرور</button>
+      <button class="btn ghost" onclick="stopReview()">پایان مرور</button>
+    </div>
 
-<div id="add" class="panel hidden">
-<div class="sectionTitle" id="formTitle">افزودن واژه</div>
-<input id="editId" type="hidden">
-<div class="grid2">
-<div><label class="muted">کلمه / عبارت</label><input id="fWord" dir="ltr" placeholder="e.g. affect"></div>
-<div><label class="muted">نقش دستوری</label><input id="fPos" dir="ltr" placeholder="verb / noun"></div>
-<div><label class="muted">IPA</label><input id="fIpa" dir="ltr" placeholder="/əˈfekt/"></div>
-<div><label class="muted">تلفظ نوشتاری فارسی (اختیاری)</label><input id="fPronFa" placeholder="اَفِکت"></div>
-<div><label class="muted">درس</label><input id="fLesson" value="درس ۱۰ — Is There a Safe Way to Drink?"></div>
-<div><label class="muted">سطح</label><select id="fLevel"><option>A1</option><option>A2</option><option>B1</option><option selected>B2</option><option>C1</option><option>C2</option></select></div>
-</div>
-<label class="muted">یادداشت</label><textarea id="fNotes" placeholder="نکته، collocation، توضیح..."></textarea>
-<div class="sectionTitle">معنی‌ها و مثال‌ها</div>
-<div id="senseEditors"></div>
-<button class="btn secondary" onclick="addSenseEditor()">+ معنی دیگر</button>
-<hr>
-<div class="actions">
-<button class="btn primary" onclick="saveCardForm()">ذخیره کارت</button>
-<button class="btn secondary hidden" id="cancelEdit" onclick="resetForm()">لغو ویرایش</button>
-</div>
-</div>
+    <div id="emptyReview" class="muted" style="padding:28px;text-align:center">
+      نوع مرور را انتخاب کن و «شروع مرور» را بزن.
+    </div>
 
-<div id="list" class="panel hidden">
-<div class="grid3">
-<input id="search" placeholder="جستجو..." oninput="renderList()">
-<select id="listLesson" onchange="renderList()"><option value="">همه درس‌ها</option></select>
-<select id="listLevel" onchange="renderList()"><option value="">همه سطوح</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select>
-</div>
-<div class="muted" id="listCount"></div>
-<div id="items"></div>
-</div>
+    <div id="reviewWrap" class="hidden">
+      <div class="progressTrack"><div id="progressFill" class="progressFill"></div></div>
+      <div id="reviewCounter" class="reviewCounter"></div>
 
-<div id="io" class="panel hidden">
-<div class="sectionTitle">Excel واقعی (.xlsx)</div>
-<div class="actions">
-<button class="btn primary" onclick="importExcel()">وارد کردن Excel</button>
-<button class="btn secondary" onclick="exportExcel()">خروجی Excel از همه کارت‌ها</button>
-<button class="btn secondary" onclick="downloadExcelTemplate()">دانلود قالب خالی Excel</button>
+      <div id="flashCard" class="card" onclick="revealCurrent()">
+        <div class="cardHeader">
+          <div id="modeBadge" class="modeBadge"></div>
+          <div id="leechBadge" class="chip leech hidden">⚠ Leech</div>
+        </div>
+
+        <div id="frontWord" class="word"></div>
+        <div id="frontPersian" class="frontPersian hidden"></div>
+        <div id="frontIpa" class="ipa"></div>
+        <div id="frontPronFa" class="pronfa"></div>
+        <div id="frontPos" class="pos"></div>
+        <div id="frontPrompt" class="prompt"></div>
+        <div id="frontContext" class="context hidden"></div>
+
+        <div id="typedBox" class="typebox hidden" onclick="event.stopPropagation()">
+          <label class="muted">جواب را تایپ کن</label>
+          <input id="typedInput" autocomplete="off" autocapitalize="none" spellcheck="false"
+                 placeholder="Type the English word...">
+          <div class="actions">
+            <button class="btn primary" onclick="checkTypedAnswer()">بررسی جواب</button>
+            <button class="btn secondary" onclick="giveUpTyped()">نمی‌دانم / نمایش جواب</button>
+          </div>
+          <div id="typedFeedback" class="feedback hidden"></div>
+        </div>
+
+        <div id="answerBox" class="answer hidden"></div>
+      </div>
+
+      <div id="voiceBar" class="actions" style="margin-top:10px">
+        <button class="btn secondary" onclick="speakCurrent('en-US')">🔊 US</button>
+        <button class="btn secondary" onclick="speakCurrent('en-GB')">🔊 UK</button>
+        <button class="btn secondary" onclick="speakCurrentExample()">🔊 مثال</button>
+      </div>
+
+      <div id="ratings" class="ratings hidden" style="margin-top:10px">
+        <button class="btn danger" onclick="rateCurrent('again')">دوباره</button>
+        <button class="btn warning" onclick="rateCurrent('hard')">سخت</button>
+        <button class="btn primary" onclick="rateCurrent('good')">خوب</button>
+        <button class="btn success" onclick="rateCurrent('easy')">آسان</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="add" class="panel hidden">
+    <div class="sectionTitle" id="formTitle">افزودن واژه</div>
+    <input id="editId" type="hidden">
+    <div class="grid2">
+      <div><label class="muted">کلمه / عبارت</label><input id="fWord" dir="ltr" placeholder="e.g. affect"></div>
+      <div><label class="muted">نقش دستوری</label><input id="fPos" dir="ltr" placeholder="verb / noun"></div>
+      <div><label class="muted">IPA</label><input id="fIpa" dir="ltr" placeholder="/əˈfekt/"></div>
+      <div><label class="muted">تلفظ نوشتاری فارسی</label><input id="fPronFa" placeholder="اَفِکت"></div>
+      <div><label class="muted">درس</label><input id="fLesson" value="درس ۱۰ — Is There a Safe Way to Drink?"></div>
+      <div><label class="muted">سطح</label>
+        <select id="fLevel"><option>A1</option><option>A2</option><option>B1</option><option selected>B2</option><option>C1</option><option>C2</option></select>
+      </div>
+    </div>
+    <label class="muted">یادداشت / Collocation / نکته</label>
+    <textarea id="fNotes"></textarea>
+    <div class="sectionTitle">معنی‌ها و مثال‌ها</div>
+    <div id="senseEditors"></div>
+    <button class="btn secondary" onclick="addSenseEditor()">+ معنی دیگر</button>
+    <hr>
+    <div class="actions">
+      <button class="btn primary" onclick="saveCardForm()">ذخیره کارت</button>
+      <button id="cancelEdit" class="btn secondary hidden" onclick="resetForm()">لغو ویرایش</button>
+    </div>
+  </section>
+
+  <section id="library" class="panel hidden">
+    <div class="sectionTitle">کتابخانه واژگان</div>
+    <div class="grid4">
+      <input id="search" placeholder="جستجو..." oninput="renderLibrary()">
+      <select id="listLesson" onchange="renderLibrary()"><option value="">همه درس‌ها</option></select>
+      <select id="listLevel" onchange="renderLibrary()">
+        <option value="">همه سطوح</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option>
+      </select>
+      <select id="listStatus" onchange="renderLibrary()">
+        <option value="">همه وضعیت‌ها</option>
+        <option value="due">موعد مرور</option>
+        <option value="leech">Leech</option>
+        <option value="hard">سخت</option>
+        <option value="mastered">تسلط بالا</option>
+      </select>
+    </div>
+    <div class="actions" style="margin-top:8px">
+      <select id="sortBy" onchange="renderLibrary()" style="max-width:220px">
+        <option value="recent">جدیدترین</option>
+        <option value="alpha">الفبایی</option>
+        <option value="due">نزدیک‌ترین موعد</option>
+        <option value="leech">Leech اول</option>
+      </select>
+      <button class="btn ghost" onclick="clearLibraryFilters()">پاک کردن فیلترها</button>
+    </div>
+    <div id="listCount" class="muted" style="margin-top:8px"></div>
+    <div id="libraryItems"></div>
+  </section>
+
+  <section id="io" class="panel hidden">
+    <div class="sectionTitle">Excel استاندارد اپ</div>
+    <div class="actions">
+      <button class="btn primary" onclick="importExcel()">وارد کردن Excel</button>
+      <button class="btn secondary" onclick="exportExcel()">خروجی Excel</button>
+      <button class="btn secondary" onclick="downloadExcelTemplate()">قالب خالی Excel</button>
+    </div>
+    <p class="muted">هر معنی یک ردیف جداست. اپ ردیف‌های یک واژه را به یک Master Card و چند Sense Card تبدیل می‌کند.</p>
+    <div class="codebox">word	ipa	pronunciation_fa	part_of_speech	meaning_fa	example_en	example_fa	lesson	level	sense_order	notes</div>
+
+    <hr>
+    <div class="sectionTitle">ورود مستقیم از ChatGPT با TSV</div>
+    <textarea id="tsvInput" dir="ltr" style="min-height:180px" placeholder="بلوک استاندارد TSV را اینجا Paste کن"></textarea>
+    <div class="actions">
+      <button class="btn primary" onclick="importTSV()">اضافه کردن TSV</button>
+      <button class="btn secondary" onclick="copyHeader()">هدر استاندارد</button>
+    </div>
+
+    <hr>
+    <div class="sectionTitle">پشتیبان کامل</div>
+    <div class="actions">
+      <button class="btn secondary" onclick="exportJson()">خروجی JSON</button>
+      <label class="btn secondary" style="display:inline-block">
+        ورود JSON
+        <input id="importFile" type="file" accept=".json,application/json" onchange="importJson(this.files[0])" style="display:none">
+      </label>
+    </div>
+  </section>
+
+  <section id="stats" class="panel hidden">
+    <div class="sectionTitle">آمار فاز ۱</div>
+    <div id="kpis" class="actions"></div>
+    <div id="leechSummary" class="notice leechBox hidden" style="margin-top:10px"></div>
+
+    <hr>
+    <div class="sectionTitle">تنظیمات مرور</div>
+    <div class="grid3">
+      <div>
+        <label class="muted">آستانه Leech</label>
+        <input id="leechThreshold" type="number" min="3" max="20" value="6" onchange="saveSettings()">
+      </div>
+      <div>
+        <label class="muted">لهجه پیش‌فرض</label>
+        <select id="accent" onchange="saveSettings()">
+          <option value="en-US">American English</option>
+          <option value="en-GB">British English</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">سرعت صدا: <span id="speedLabel"></span></label>
+        <input id="speechRate" type="range" min="0.60" max="1.10" step="0.05" value="0.85"
+               oninput="speedLabel.textContent=this.value;saveSettings()">
+      </div>
+    </div>
+    <label>
+      <input id="autoSpeak" type="checkbox" onchange="saveSettings()" style="width:auto">
+      هنگام نمایش کارت، واژه خودکار تلفظ شود
+    </label>
+    <div class="actions" style="margin-top:8px">
+      <button class="btn secondary" onclick="openTtsSettings()">تنظیم موتور صدای Android</button>
+      <button class="btn danger" onclick="resetProgress()">پاک کردن فقط سابقه مرور</button>
+    </div>
+
+    <hr>
+    <div class="sectionTitle">منطق فاز ۱</div>
+    <details>
+      <summary>Master Card چیست؟</summary>
+      <p class="muted">یک واژه را با همه معنی‌هایش یکجا مرور می‌کند و سابقه مرور مستقل دارد.</p>
+    </details>
+    <details>
+      <summary>Sense Card چیست؟</summary>
+      <p class="muted">هر معنیِ یک واژه برنامه مرور مستقل دارد؛ بنابراین اگر فقط یک معنی را بلد نباشی همان معنی زودتر برمی‌گردد.</p>
+    </details>
+    <details>
+      <summary>Leech چیست؟</summary>
+      <p class="muted">واژه یا معنی‌ای که چند بار پشت‌سرهم فراموش می‌شود علامت‌گذاری می‌شود تا جداگانه روی آن کار کنی.</p>
+    </details>
+  </section>
 </div>
-<p class="muted">هر معنی یک ردیف جدا دارد. اگر یک کلمه ۴ معنی داشته باشد، همان کلمه در ۴ ردیف تکرار می‌شود و اپ آنها را در یک فلش‌کارت گروه‌بندی می‌کند.</p>
-<div class="codebox">word	ipa	pronunciation_fa	part_of_speech	meaning_fa	example_en	example_fa	lesson	level	sense_order	notes</div>
-<hr>
-<div class="sectionTitle">ورود مستقیم از همین چت (TSV)</div>
-<p class="muted">بلوک استانداردی که من از این به بعد می‌نویسم را کامل کپی کن و اینجا Paste کن.</p>
-<textarea id="tsvInput" dir="ltr" style="min-height:170px" placeholder="word&#9;ipa&#9;pronunciation_fa..."></textarea>
-<div class="actions">
-<button class="btn primary" onclick="importTSV()">اضافه کردن TSV</button>
-<button class="btn secondary" onclick="copyHeader()">کپی هدر استاندارد</button>
-</div>
-<hr>
-<div class="sectionTitle">پشتیبان کامل</div>
-<div class="actions">
-<button class="btn secondary" onclick="exportJson()">خروجی JSON</button>
-<label class="btn secondary" style="display:inline-block">ورود JSON<input id="importFile" type="file" accept=".json,application/json" onchange="importJson(this.files[0])" style="display:none"></label>
-</div>
-</div>
-
-<div id="stats" class="panel hidden">
-<div class="sectionTitle">آمار</div>
-<div class="actions" id="kpis"></div>
-<hr>
-<div class="sectionTitle">تلفظ</div>
-<div class="grid2">
-<div><label class="muted">لهجه پیش‌فرض</label><select id="accent" onchange="saveSettings()"><option value="en-US">American English (US)</option><option value="en-GB">British English (UK)</option></select></div>
-<div><label class="muted">سرعت صدا: <span id="speedLabel"></span></label><input id="speechRate" type="range" min="0.60" max="1.10" step="0.05" value="0.85" oninput="speedLabel.textContent=this.value;saveSettings()"></div>
-</div>
-<label><input id="autoSpeak" type="checkbox" onchange="saveSettings()" style="width:auto"> هنگام نمایش کارت، واژه خودکار تلفظ شود</label>
-<div style="margin-top:9px"><button class="btn secondary" onclick="openTtsSettings()">تنظیم موتور و صدای Android</button></div>
-<p class="muted">اپ بهترین صدای نصب‌شده برای US یا UK را انتخاب می‌کند. کیفیت نهایی به موتور Text-to-Speech گوشی هم وابسته است.</p>
-<hr>
-<div class="sectionTitle">مدیریت مرور</div>
-<button class="btn danger" onclick="resetProgress()">پاک کردن فقط سابقه مرور</button>
-</div>
-</div>
-
-<script>
-const KEY='vocab_flashcards_v3';
-const OLD_KEY='vocab_flashcards_v2';
-const SETTINGS_KEY='vocab_flashcards_settings_v1';
-const SEED_VER_KEY='vocab_seed_version';
-const HEADER=['word','ipa','pronunciation_fa','part_of_speech','meaning_fa','example_en','example_fa','lesson','level','sense_order','notes'];
-let cards=[], queue=[], idx=0, revealed=false;
-let settings={accent:'en-US',speechRate:.85,autoSpeak:false};
-
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
-function cleanSense(x){return {meaning:(x?.meaning||'').trim(),example:(x?.example||'').trim(),translation:(x?.translation||'').trim()}}
-function normalize(c){
-  const senses=(Array.isArray(c.senses)?c.senses:[{meaning:c.meaning||'',example:c.example||'',translation:c.translation||''}]).map(cleanSense).filter(x=>x.meaning||x.example||x.translation);
-  return {
-    id:c.id||uid(),word:(c.word||'').trim(),ipa:(c.ipa||'').trim(),pronunciationFa:(c.pronunciationFa||c.pronunciation_fa||'').trim(),
-    partOfSpeech:(c.partOfSpeech||c.part_of_speech||'').trim(),lesson:(c.lesson||'بدون درس').trim(),level:c.level||'B2',notes:(c.notes||'').trim(),
-    senses:senses.length?senses:[{meaning:'',example:'',translation:''}],
-    stage:Number(c.stage||0),dueAt:Number(c.dueAt||0),lastRating:c.lastRating||'',knownCount:Number(c.knownCount||0),
-    missedCount:Number(c.missedCount||0),reviewCount:Number(c.reviewCount||0),createdAt:c.createdAt||Date.now(),updatedAt:c.updatedAt||Date.now()
-  }
-}
-function cardKey(c){return (c.word||'').trim().toLowerCase()+'|'+(c.lesson||'').trim().toLowerCase()}
-function senseKey(s){return (s.meaning||'').trim().toLowerCase()+'|'+(s.example||'').trim().toLowerCase()}
-function mergeSeed(existing, seedCards){
-  const map=new Map(existing.map(c=>[cardKey(c),c]));
-  seedCards.map(normalize).forEach(s=>{
-    const k=cardKey(s), cur=map.get(k);
-    if(!cur){existing.push(s);map.set(k,s);return}
-    if(!cur.ipa&&s.ipa)cur.ipa=s.ipa;
-    if(!cur.partOfSpeech&&s.partOfSpeech)cur.partOfSpeech=s.partOfSpeech;
-    if(!cur.pronunciationFa&&s.pronunciationFa)cur.pronunciationFa=s.pronunciationFa;
-    const have=new Set(cur.senses.map(senseKey));
-    s.senses.forEach(x=>{if(!have.has(senseKey(x))){cur.senses.push(x);have.add(senseKey(x))}})
-  });
-  return existing;
-}
-function loadSeedPayload(){
-  try{
-    if(window.Android&&Android.getSeedData)return JSON.parse(Android.getSeedData());
-  }catch(e){}
-  return {version:0,cards:[]};
-}
-function load(){
-  try{settings={...settings,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch(e){}
-  accent.value=settings.accent; speechRate.value=settings.speechRate; speedLabel.textContent=settings.speechRate; autoSpeak.checked=!!settings.autoSpeak;
-  let stored=null;
-  try{stored=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
-  if(!Array.isArray(stored)){try{stored=JSON.parse(localStorage.getItem(OLD_KEY)||'null')}catch(e){}}
-  if(!Array.isArray(stored))stored=[];
-  cards=stored.map(normalize);
-  const seed=loadSeedPayload();
-  cards=mergeSeed(cards,Array.isArray(seed.cards)?seed.cards:[]);
-  localStorage.setItem(SEED_VER_KEY,String(seed.version||0));
-  save(); resetForm(); refreshFilters(); renderList(); updateStats();
-}
-function save(){localStorage.setItem(KEY,JSON.stringify(cards));updateStats()}
-function saveSettings(){settings={accent:accent.value,speechRate:Number(speechRate.value),autoSpeak:autoSpeak.checked};localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings))}
-function showTab(id){['review','add','list','io','stats'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));if(id==='list')renderList();if(id==='stats')updateStats()}
-function updateStats(){
-  const now=Date.now(),due=cards.filter(c=>!c.dueAt||c.dueAt<=now).length,hard=cards.filter(c=>c.lastRating==='again'||c.lastRating==='hard').length;
-  const mastered=cards.filter(c=>c.stage>=6).length;
-  topStats.innerHTML='<span class="chip">'+cards.length+' واژه/عبارت</span><span class="chip">'+due+' موعد مرور</span><span class="chip">'+hard+' سخت</span>';
-  kpis.innerHTML='<div class="kpi"><b>'+cards.length+'</b>کل کارت‌ها</div><div class="kpi"><b>'+due+'</b>موعد امروز</div><div class="kpi"><b>'+mastered+'</b>تسلط بالا</div><div class="kpi"><b>'+cards.reduce((a,c)=>a+c.reviewCount,0)+'</b>مرور انجام‌شده</div>';
-}
-function refreshFilters(){
-  const lessons=[...new Set(cards.map(c=>c.lesson).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fa'));
-  [reviewLesson,listLesson].forEach(sel=>{const old=sel.value;sel.innerHTML='<option value="">همه درس‌ها</option>'+lessons.map(x=>'<option>'+esc(x)+'</option>').join('');sel.value=old});
-}
-
-function addSenseEditor(sense={meaning:'',example:'',translation:''}){
-  const wrap=document.createElement('div');wrap.className='sense-editor';
-  wrap.innerHTML='<input class="sMeaning" placeholder="معنی فارسی" value="'+attr(sense.meaning)+'"><textarea class="sExample" dir="ltr" placeholder="Example in English">'+esc(sense.example)+'</textarea><textarea class="sTranslation" placeholder="ترجمه مثال">'+esc(sense.translation)+'</textarea><button class="btn danger mini" type="button" onclick="this.parentElement.remove()">حذف این معنی</button>';
-  senseEditors.appendChild(wrap);
-}
-function resetForm(){
-  editId.value='';formTitle.textContent='افزودن واژه';cancelEdit.classList.add('hidden');
-  fWord.value='';fPos.value='';fIpa.value='';fPronFa.value='';fLesson.value='درس ۱۰ — Is There a Safe Way to Drink?';fLevel.value='B2';fNotes.value='';
-  senseEditors.innerHTML='';addSenseEditor();
-}
-function collectSenses(){
-  return [...document.querySelectorAll('.sense-editor')].map(x=>({meaning:x.querySelector('.sMeaning').value.trim(),example:x.querySelector('.sExample').value.trim(),translation:x.querySelector('.sTranslation').value.trim()})).filter(x=>x.meaning||x.example||x.translation)
-}
-function saveCardForm(){
-  const w=fWord.value.trim(), senses=collectSenses();
-  if(!w)return alert('کلمه یا عبارت را وارد کن');
-  if(!senses.length||!senses.some(x=>x.meaning))return alert('حداقل یک معنی فارسی وارد کن');
-  const id=editId.value;
-  const base={word:w,ipa:fIpa.value.trim(),pronunciationFa:fPronFa.value.trim(),partOfSpeech:fPos.value.trim(),lesson:fLesson.value.trim()||'بدون درس',level:fLevel.value,notes:fNotes.value.trim(),senses,updatedAt:Date.now()};
-  if(id){
-    const i=cards.findIndex(c=>String(c.id)===id); if(i>=0)cards[i]=normalize({...cards[i],...base,id:cards[i].id});
-  }else cards.unshift(normalize(base));
-  save();refreshFilters();resetForm();showTab('list');renderList();
-}
-function editCard(id){
-  const c=cards.find(x=>String(x.id)===String(id));if(!c)return;
-  editId.value=c.id;formTitle.textContent='ویرایش: '+c.word;cancelEdit.classList.remove('hidden');
-  fWord.value=c.word;fPos.value=c.partOfSpeech;fIpa.value=c.ipa;fPronFa.value=c.pronunciationFa;fLesson.value=c.lesson;fLevel.value=c.level;fNotes.value=c.notes;
-  senseEditors.innerHTML='';c.senses.forEach(addSenseEditor);showTab('add');window.scrollTo({top:0,behavior:'smooth'});
-}
-function delCard(id){if(confirm('این کارت و سابقه مرورش حذف شود؟')){cards=cards.filter(c=>String(c.id)!==String(id));save();refreshFilters();renderList()}}
-function renderList(){
-  const q=(search?.value||'').trim().toLowerCase(),lesson=listLesson?.value||'',level=listLevel?.value||'';
-  const filtered=cards.filter(c=>(!lesson||c.lesson===lesson)&&(!level||c.level===level)&&(!q||[c.word,c.ipa,c.pronunciationFa,c.partOfSpeech,c.lesson,c.notes,...c.senses.flatMap(s=>[s.meaning,s.example,s.translation])].join(' ').toLowerCase().includes(q)));
-  listCount.textContent=filtered.length+' مورد';
-  items.innerHTML=filtered.slice(0,800).map(c=>'<div class="item"><div class="itemTitle">'+esc(c.word)+'</div><div class="ipa">'+esc(c.ipa)+'</div><div class="muted">'+esc(c.partOfSpeech)+' · '+esc(c.level)+' · '+esc(c.lesson)+' · '+c.senses.length+' معنی</div><div style="margin-top:6px">'+c.senses.slice(0,3).map((s,i)=>(i+1)+'. '+esc(s.meaning)).join('<br>')+(c.senses.length>3?'<br>…':'')+'</div><div class="actions" style="margin-top:8px"><button class="btn secondary mini" onclick="speakCardById(\''+c.id+'\')">🔊</button><button class="btn primary mini" onclick="editCard(\''+c.id+'\')">ویرایش</button><button class="btn danger mini" onclick="delCard(\''+c.id+'\')">حذف</button></div></div>').join('')||'<div class="muted">موردی پیدا نشد.</div>';
-}
-
-function startReview(){
-  const now=Date.now(),m=mode.value,lesson=reviewLesson.value;
-  queue=cards.filter(c=>(!lesson||c.lesson===lesson)&&(m==='all'||(m==='missed'?(c.lastRating==='again'||c.lastRating==='hard'):(!c.dueAt||c.dueAt<=now))));
-  if(!queue.length)return alert('فعلاً کارتی برای این فیلتر وجود ندارد.');
-  queue.sort((a,b)=>(a.dueAt||0)-(b.dueAt||0)||Math.random()-.5);idx=0;showCard();
-}
-function showCard(){
-  if(idx>=queue.length){card.classList.add('hidden');ratings.classList.add('hidden');voiceBar.classList.add('hidden');empty.classList.remove('hidden');empty.textContent='مرور تمام شد. آفرین!';updateStats();return}
-  const c=queue[idx];empty.classList.add('hidden');card.classList.remove('hidden');ratings.classList.remove('hidden');voiceBar.classList.remove('hidden');
-  word.textContent=c.word;ipa.textContent=c.ipa?(c.ipa.trim().startsWith('/')?c.ipa:'/ '+c.ipa+' /'):'';pronfa.textContent=c.pronunciationFa?'تلفظ فارسی: '+c.pronunciationFa:'';pos.textContent=[c.partOfSpeech,c.level,c.lesson].filter(Boolean).join(' · ');
-  answer.innerHTML=c.senses.map((s,i)=>'<div class="sense"><div class="meaning">'+(i+1)+'. '+esc(s.meaning)+'</div>'+(s.example?'<div class="example">'+esc(s.example)+'</div>':'')+(s.translation?'<div class="translation">'+esc(s.translation)+'</div>':'')+'</div>').join('')+(c.notes?'<div class="muted">نکته: '+esc(c.notes)+'</div>':'');
-  answer.classList.add('hidden');frontHint.classList.remove('hidden');revealed=false;
-  if(settings.autoSpeak)setTimeout(()=>speakCurrent(settings.accent),180);
-}
-function reveal(){if(!revealed){revealed=true;answer.classList.remove('hidden');frontHint.classList.add('hidden')}}
-function nextDelay(c,r){
-  const now=Date.now();
-  if(r==='again'){c.stage=Math.max(0,c.stage-1);return now+10*60*1000}
-  if(r==='hard'){c.stage=Math.max(1,c.stage);return now+Math.max(1,[1,2,4,7,12,20,35,60][Math.min(c.stage,7)])*86400000}
-  if(r==='good'){c.stage=Math.min(c.stage+1,10);return now+[1,3,7,14,30,60,120,240,365,540,720][Math.min(c.stage,10)]*86400000}
-  c.stage=Math.min(c.stage+2,10);return now+[3,7,14,30,60,120,240,365,540,720,1080][Math.min(c.stage,10)]*86400000
-}
-function rate(r){
-  if(!revealed){reveal();return}
-  const c=queue[idx];c.lastRating=r;c.reviewCount++;if(r==='again'){c.missedCount++}else if(r==='hard'){c.missedCount++}else c.knownCount++;
-  c.dueAt=nextDelay(c,r);c.updatedAt=Date.now();save();idx++;showCard();
-}
-
-function speak(text,locale=settings.accent){if(!text)return;if(window.Android&&Android.speak)Android.speak(text,locale,Number(settings.speechRate));else if('speechSynthesis'in window){let u=new SpeechSynthesisUtterance(text);u.lang=locale;u.rate=settings.speechRate;speechSynthesis.speak(u)}}
-function speakCurrent(locale){const c=queue[idx];if(c)speak(c.word,locale)}
-function speakExample(){const c=queue[idx];if(!c)return;const ex=c.senses.find(s=>s.example)?.example;if(ex)speak(ex,settings.accent)}
-function speakCardById(id){const c=cards.find(x=>String(x.id)===String(id));if(c)speak(c.word)}
-function openTtsSettings(){if(window.Android&&Android.openTtsSettings)Android.openTtsSettings()}
-
-function flattenRows(){
-  const rows=[];cards.forEach(c=>c.senses.forEach((s,i)=>rows.push({word:c.word,ipa:c.ipa,pronunciation_fa:c.pronunciationFa,part_of_speech:c.partOfSpeech,meaning_fa:s.meaning,example_en:s.example,example_fa:s.translation,lesson:c.lesson,level:c.level,sense_order:String(i+1),notes:c.notes})));return rows
-}
-function importRows(rows){
-  if(!Array.isArray(rows))throw new Error('rows');
-  const grouped=new Map();
-  rows.forEach(r=>{
-    const word=String(r.word||'').trim(),meaning=String(r.meaning_fa||'').trim();if(!word||!meaning)return;
-    const lesson=String(r.lesson||'بدون درس').trim(),k=word.toLowerCase()+'|'+lesson.toLowerCase();
-    if(!grouped.has(k))grouped.set(k,{word,ipa:String(r.ipa||'').trim(),pronunciationFa:String(r.pronunciation_fa||'').trim(),partOfSpeech:String(r.part_of_speech||'').trim(),lesson,level:String(r.level||'B2').trim(),notes:String(r.notes||'').trim(),senses:[]});
-    const g=grouped.get(k);g.senses.push({meaning,example:String(r.example_en||'').trim(),translation:String(r.example_fa||'').trim()});
-  });
-  let added=0,merged=0;const map=new Map(cards.map(c=>[cardKey(c),c]));
-  grouped.forEach(g=>{const k=cardKey(g),cur=map.get(k);if(!cur){const n=normalize(g);cards.unshift(n);map.set(k,n);added++}else{if(!cur.ipa&&g.ipa)cur.ipa=g.ipa;if(!cur.pronunciationFa&&g.pronunciationFa)cur.pronunciationFa=g.pronunciationFa;if(!cur.partOfSpeech&&g.partOfSpeech)cur.partOfSpeech=g.partOfSpeech;if(!cur.notes&&g.notes)cur.notes=g.notes;const have=new Set(cur.senses.map(senseKey));g.senses.forEach(s=>{if(!have.has(senseKey(s))){cur.senses.push(s);have.add(senseKey(s));merged++}})}})
-  save();refreshFilters();renderList();alert(added+' کارت جدید و '+merged+' معنی جدید اضافه شد.');
-}
-function importExcel(){if(window.Android&&Android.pickExcel)Android.pickExcel();else alert('ورود مستقیم Excel فقط در نسخه Android فعال است.')}
-window.onExcelImportedFromJson=function(json){try{importRows(JSON.parse(json))}catch(e){alert('ساختار فایل Excel معتبر نیست. از قالب استاندارد استفاده کن.')}}
-function exportExcel(){if(window.Android&&Android.exportXlsx)Android.exportXlsx(JSON.stringify(flattenRows()),'vocabulary-export.xlsx');else alert('این قابلیت در نسخه Android فعال است.')}
-function downloadExcelTemplate(){if(window.Android&&Android.exportXlsx)Android.exportXlsx('[]','vocabulary-template.xlsx')}
-function parseTSV(txt){
-  const lines=txt.replace(/\r/g,'').split('\n').filter(x=>x.trim());if(lines.length<2)return[];
-  const headers=lines[0].split('\t').map(x=>x.trim());return lines.slice(1).map(line=>{const vals=line.split('\t');const o={};headers.forEach((h,i)=>o[h]=vals[i]??'');return o})
-}
-function importTSV(){try{const rows=parseTSV(tsvInput.value);if(!rows.length)return alert('داده‌ای پیدا نشد. هدر استاندارد و ردیف‌ها را کامل Paste کن.');importRows(rows);tsvInput.value=''}catch(e){alert('فرمت TSV معتبر نیست.')}}
-function copyHeader(){const h=HEADER.join('\t');navigator.clipboard?.writeText(h);tsvInput.value=h+'\n';alert('هدر استاندارد آماده شد.')}
-function exportJson(){const payload={version:3,exportedAt:new Date().toISOString(),cards};const txt=JSON.stringify(payload,null,2);if(window.Android&&Android.saveFile)Android.saveFile('vocab-backup.json',txt,'application/json')}
-function importJson(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);const arr=Array.isArray(d)?d:d.cards;if(!Array.isArray(arr))throw 0;cards=arr.map(normalize);save();refreshFilters();renderList();alert('پشتیبان بازیابی شد.')}catch(e){alert('فایل JSON معتبر نیست.')}};r.readAsText(file)}
-function resetProgress(){if(confirm('فقط سابقه مرور پاک شود؟ خود واژه‌ها باقی می‌مانند.')){cards.forEach(c=>{c.stage=0;c.dueAt=0;c.lastRating='';c.knownCount=0;c.missedCount=0;c.reviewCount=0});save();alert('انجام شد.')}}
-
-function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function attr(s=''){return esc(s).replace(/\n/g,' ')}
-load();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
