@@ -514,10 +514,13 @@ public class MainActivity extends Activity {
             runOnUiThread(() -> {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                // Some Android file managers tag downloaded .xlsx files as ZIP or generic binary.
+                // Use */* plus MIME hints so the file remains selectable regardless of provider metadata.
+                intent.setType("*/*");
                 String[] mimes = {
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         "application/vnd.ms-excel",
+                        "application/zip",
                         "application/octet-stream"
                 };
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimes);
