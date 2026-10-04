@@ -13,7 +13,7 @@ android {
         minSdk 24
         targetSdk 35
         versionCode ciVersionCode
-        versionName "2.0.${ciVersionCode}"
+        versionName "3.0.${ciVersionCode}"
     }
 
     buildTypes {
