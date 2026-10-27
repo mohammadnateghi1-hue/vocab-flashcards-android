@@ -40,3 +40,19 @@ GitHub Actions builds `VocabFlashcards.apk` automatically.
 - TSV import from ChatGPT preserved
 - More compatible Android file picker for XLSX files
 - Existing US/UK TTS and pronunciation settings preserved
+
+
+## Version 4 — independent online vocabulary lookup
+
+- Search English words and phrases regardless of local flashcard database
+- Free Dictionary API definitions, fallback to Wiktionary
+- Persian translations of definitions/examples via MyMemory (best-effort and rate-limited)
+- Separate senses and available dictionary-attested examples, with part of speech and IPA
+- Google Books Ngram year-by-year percentage for English 2019 corpus, 1950–2019 (not spoken usage or sense frequencies)
+- Wikimedia Commons image gallery, image selection and attribution link
+- Save one or all meanings as reviewable cards, with selected online image
+- Online lookup directly from any local library word
+- Search results do not automatically change local database
+- Online services require Internet; honest empty/error states for missing data
+
+Sources: https://dictionaryapi.dev/ , https://en.wiktionary.org/ , https://mymemory.translated.net/doc/spec.php , https://books.google.com/ngrams/info , https://commons.wikimedia.org/
