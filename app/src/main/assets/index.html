@@ -11,11 +11,12 @@
   <div class="top">
     <div class="brand">
       <h1>فلش‌کارت انگلیسی من</h1>
-      <span class="version">Phase 1 · v3</span>
+      <span class="version">Online Dictionary · v4</span>
     </div>
     <div class="chips" id="topStats"></div>
     <div class="tabs">
       <button class="btn primary" onclick="showTab('review')">مرور</button>
+      <button class="btn violet" onclick="showTab('online')">🔎 جست‌وجوی آنلاین</button>
       <button class="btn secondary" onclick="showTab('add')">افزودن</button>
       <button class="btn secondary" onclick="showTab('library')">کتابخانه</button>
       <button class="btn secondary" onclick="showTab('io')">Excel / TSV</button>
@@ -103,6 +104,55 @@
         <button class="btn primary" onclick="rateCurrent('good')">خوب</button>
         <button class="btn success" onclick="rateCurrent('easy')">آسان</button>
       </div>
+    </div>
+  </section>
+
+
+  <section id="online" class="panel hidden">
+    <div class="sectionTitle">🔎 جست‌وجوی آزاد در اینترنت</div>
+    <p class="muted">هر کلمه انگلیسی را جست‌وجو کن؛ لازم نیست قبلاً در کتابخانه یا فایل Excel ذخیره شده باشد. این بخش اینترنت می‌خواهد.</p>
+    <div class="toolbar">
+      <input id="onlineInput" dir="ltr" autocomplete="off" autocapitalize="none" spellcheck="false"
+        placeholder="Enter any English word or phrase..."
+        onkeydown="if(event.key==='Enter')searchOnline()">
+      <button class="btn primary" onclick="searchOnline()">جست‌وجو</button>
+    </div>
+    <div id="onlineStatus" class="muted" style="margin-top:7px">مثلاً: bank، sanction، run، ambivalent، make up one's mind</div>
+    <div id="onlineResults" class="hidden">
+      <div class="item" style="margin-top:13px">
+        <div class="itemTop">
+          <div>
+            <div id="onlineWord" class="word"></div>
+            <div id="onlineIpa" class="ipa"></div>
+            <div id="onlineSenseCount" class="muted"></div>
+          </div>
+          <button class="btn secondary" onclick="speakOnline()">🔊 تلفظ</button>
+        </div>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn success" onclick="saveOnlineToFlashcards()">+ افزودن همه معنی‌ها به فلش‌کارت</button>
+          <button class="btn ghost" onclick="openOnlineSource()">مشاهده منبع</button>
+        </div>
+      </div>
+      <div class="sectionTitle" style="margin-top:18px">معنی‌ها و مثال‌های مستقل</div>
+      <div class="muted">ترجمه فارسی از یک سرویس عمومی تأمین می‌شود و ممکن است کمی دیرتر برسد یا بعضی موارد ترجمه نشوند. معانی انگلیسی از فرهنگ لغت است. ترتیب معانی، درصد فراوانی هر معنی را نشان نمی‌دهد.</div>
+      <div id="onlineSenses"></div>
+    </div>
+    <div id="onlineFrequencyPanel" class="panel hidden">
+      <div class="sectionTitle">روند کاربرد تاریخی واژه (٪)</div>
+      <div id="onlineFrequencySummary" class="muted"></div>
+      <div id="onlineChart" style="margin:10px 0;overflow:hidden"></div>
+      <p class="muted">این درصد، نسبت دفعات تکرار عبارت به کل واژه‌ها در کتاب‌های انگلیسی نمایه‌شده در Google Books است (۱۹۵۰ تا ۲۰۱۹). این عدد نشان‌دهنده درصد مکالمه روزمره، تعداد کاربران یا فراوانی تک‌تک معنی‌ها نیست.</p>
+      <button class="btn ghost" onclick="openNgramSource()">نمایش نمودار اصلی در Google Books</button>
+    </div>
+    <div id="onlineImagePanel" class="panel hidden">
+      <div class="sectionTitle">تصویر برای تقویت حافظه تصویری</div>
+      <div id="onlineImageNote" class="muted">تصویرها از Wikimedia Commons می‌آیند. برای واژه‌های انتزاعی یا چندمعنایی، ارتباط تصویر را بررسی کن.</div>
+      <div id="onlineImages" class="onlineImageGrid"></div>
+      <p class="muted">با لمس تصویر، همان تصویر را به کارت ذخیره‌شده اضافه کن. برای دیدن تصویر در فلش‌کارت اتصال اینترنت لازم است؛ حق نشر و نام صاحب اثر در صفحه منبع قابل مشاهده‌اند.</p>
+    </div>
+    <div class="notice" style="margin-top:15px">
+      <b>منابع و محدودیت‌ها:</b> Free Dictionary / Wiktionary (معانی)، MyMemory (ترجمه)، Google Books Ngram (فراوانی تاریخی) و Wikimedia Commons (تصویر).
+      در صورت قطع ارتباط یا محدودیت سرویس، بخش مربوطه پیام خطا نشان می‌دهد و عدد یا معنی ساختگی نمایش نمی‌دهد.
     </div>
   </section>
 
@@ -240,5 +290,6 @@
   </section>
 </div>
 <script src="app.js"></script>
+<script src="online.js"></script>
 </body>
 </html>
