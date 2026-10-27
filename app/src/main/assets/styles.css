@@ -95,3 +95,14 @@ summary{cursor:pointer;font-weight:700}
   .word{font-size:32px}.frontPersian{font-size:24px}.app{padding:11px}.btn{padding:10px 11px}
   .card{min-height:330px;padding:18px}.toolbar>*{min-width:110px}
 }
+
+/* Online dictionary and visual memory gallery */
+.onlineImageGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-top:12px}
+.onlineImageChoice{border:2px solid #344860;background:#0a1728;border-radius:14px;padding:8px;color:var(--text);text-align:center;cursor:pointer;min-width:0}
+.onlineImageChoice.selected{border-color:#34d399;background:#12382e}
+.onlineImageChoice img{width:100%;aspect-ratio:4 / 3;object-fit:contain;border-radius:8px;background:#101b2d}
+.onlineImageChoice span{font-size:11px;overflow-wrap:anywhere;display:block;margin-top:4px}
+.onlineCardImage{margin:10px auto 18px;text-align:center}
+.onlineCardImage img{width:100%;max-width:350px;max-height:240px;object-fit:contain;border-radius:14px;background:#0c1728;border:1px solid #30445e}
+#onlineChart svg{display:block;background:#091728;border-radius:12px;border:1px solid #2e435e}
+#onlineStatus{line-height:1.7}
