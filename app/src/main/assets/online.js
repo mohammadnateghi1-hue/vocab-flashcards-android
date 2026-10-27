@@ -67,6 +67,8 @@ window.onOnlineLookupResult=function(json){
     const trans=$('onlineExFa-'+data.index);
     if(meaning)meaning.textContent=s.meaningFa||'ترجمه فارسی یافت نشد.';
     if(trans)trans.textContent=s.exampleFa||'ترجمه مثال یافت نشد.';
+  }else if(type==='translationDone'){
+    onlineState.statuses.dictionary='معنی‌ها و ترجمه‌های موجود دریافت شدند';
   }else if(type==='frequency'){
     onlineState.frequency=Array.isArray(data.points)?data.points:[];
     onlineState.ngramUrl=data.sourceUrl||'';
