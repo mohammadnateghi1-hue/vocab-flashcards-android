@@ -583,6 +583,9 @@ function renderCurrent(){
     }
   }
 
+  if(item.kind!=='master' && card.imageUrl && card.imageUrl.startsWith('https://upload.wikimedia.org/')){
+    $('answerBox').innerHTML+='<div class="onlineCardImage"><img src="'+attr(card.imageUrl)+'" alt="'+attr(card.word)+'" loading="lazy"></div>';
+  }
   if(settings.autoSpeak&&(item.kind==='master'||item.kind==='sense'))speak(card.word,settings.accent);
 }
 
