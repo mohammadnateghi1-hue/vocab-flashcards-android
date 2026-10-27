@@ -106,7 +106,7 @@ public final class OnlineDictionary {
             String source = "Free Dictionary API";
             String sourceUrl = "https://dictionaryapi.dev/";
             try {
-                JSONArray entries = new JSONArray(get("https://api.dictionaryapi.dev/api/v2/entries/en/" + enc(word)));
+                JSONArray entries = new JSONArray(get("https://api.dictionaryapi.dev/api/v2/entries/en/" + enc(word).replace("+", "%20")));
                 Set<String> seen = new HashSet<>();
                 for (int i = 0; i < entries.length() && senses.length() < MAX_SENSES; i++) {
                     JSONObject entry = entries.optJSONObject(i);
@@ -159,7 +159,7 @@ public final class OnlineDictionary {
             } catch (Exception primaryError) {
                 // Wiktionary's English definitions are the secondary online source,
                 // including phrases for which Free Dictionary may not have an entry.
-                JSONObject response = new JSONObject(get("https://en.wiktionary.org/api/rest_v1/page/definition/" + enc(word)));
+                JSONObject response = new JSONObject(get("https://en.wiktionary.org/api/rest_v1/page/definition/" + enc(word).replace("+", "%20")));
                 JSONArray sections = response.optJSONArray("en");
                 if (sections != null) {
                     Set<String> seen = new HashSet<>();
@@ -188,7 +188,7 @@ public final class OnlineDictionary {
                     }
                 }
                 source = "Wiktionary";
-                sourceUrl = "https://en.wiktionary.org/wiki/" + enc(word);
+                sourceUrl = "https://en.wiktionary.org/wiki/" + enc(word).replace("+", "%20");
             }
             if (senses.length() == 0) {
                 post(activity, view, msg(requestId, "dictionary", "برای این واژه در منابع آنلاین معنی قابل نمایش پیدا نشد."));
@@ -217,6 +217,7 @@ public final class OnlineDictionary {
                     post(activity, view, patch);
                 }
             }
+            post(activity, view, base(requestId, "translationDone"));
         } catch (Exception e) {
             post(activity, view, msg(requestId, "dictionary", "فرهنگ لغت آنلاین در دسترس نیست. اتصال اینترنت را بررسی کن یا دوباره تلاش کن."));
         }
