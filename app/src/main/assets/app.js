@@ -63,6 +63,8 @@ function normalizeCard(c={}){
     lesson:String(c.lesson||'بدون درس').trim(),
     level:String(c.level||'B2').trim()||'B2',
     notes:String(c.notes||'').trim(),
+    imageUrl:String(c.imageUrl||'').trim(),
+    imageSource:String(c.imageSource||'').trim(),
     senses,
     masterReview:blankReview(c.masterReview||legacyReview),
     createdAt:Number(c.createdAt||Date.now()),
@@ -214,7 +216,7 @@ function recomputeLeeches(){
 }
 
 function showTab(id){
-  ['review','add','library','io','stats'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
+  ['review','online','add','library','io','stats'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
   if(id==='library')renderLibrary();
   if(id==='stats')updateStats();
 }
@@ -542,6 +544,7 @@ function renderCurrent(){
     $('frontPos').textContent=card.partOfSpeech;
     $('frontPrompt').textContent='همه معنی‌های این واژه/عبارت را به یاد بیاور.';
     $('answerBox').innerHTML=
+      (card.imageUrl&&card.imageUrl.startsWith('https://upload.wikimedia.org/') ? '<div class="onlineCardImage"><img src="'+attr(card.imageUrl)+'" alt="'+attr(card.word)+'" loading="lazy"></div>' : '')+
       card.senses.map((s,i)=>'<div class="sense"><div class="meaning">'+(i+1)+'. '+esc(s.meaning)+'</div>'+
       (s.example?'<div class="example">'+esc(s.example)+'</div>':'')+
       (s.translation?'<div class="translation">'+esc(s.translation)+'</div>':'')+'</div>').join('')+
