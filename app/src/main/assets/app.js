@@ -414,6 +414,7 @@ function renderLibrary(){
       '<div class="actions" style="margin-top:10px">'+
       '<button class="btn primary" onclick="reviewOne(\''+jsq(c.id)+'\')">مرور این واژه</button>'+
       '<button class="btn secondary" onclick="speakCard(\''+jsq(c.id)+'\')">🔊</button>'+
+      '<button class="btn violet" onclick="openOnlineWord(\''+jsq(c.word)+'\')">🔎 آنلاین</button>'+
       '<button class="btn secondary" onclick="editCard(\''+jsq(c.id)+'\')">ویرایش</button>'+
       (leech?'<button class="btn warning" onclick="clearCardLeech(\''+jsq(c.id)+'\')">رفع Leech</button>':'')+
       '<button class="btn danger" onclick="deleteCard(\''+jsq(c.id)+'\')">حذف</button>'+
