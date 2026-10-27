@@ -480,6 +480,23 @@ public class MainActivity extends Activity {
 
     public class AndroidBridge {
         @JavascriptInterface
+        public void lookupOnline(String word, String requestId) {
+            OnlineDictionary.lookup(MainActivity.this, webView, word, requestId);
+        }
+
+        @JavascriptInterface
+        public void openExternal(String url) {
+            if (url == null || !url.startsWith("https://")) return;
+            runOnUiThread(() -> {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    toast("مرورگر باز نشد");
+                }
+            });
+        }
+        @JavascriptInterface
         public String getSeedData() {
             try {
                 return loadCompressedSeed();
